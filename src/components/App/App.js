@@ -25,26 +25,26 @@ const App = () => {
 
   return (
     <div className='App'>
-      <div class='form-check'>
+      <div className='form-check'>
         <input
-          class='form-check-input'
+          className='form-check-input'
           type='radio'
           name='flexRadioDefault'
           id='flexRadioDefault1'
         />
-        <label class='form-check-label' for='flexRadioDefault1'>
+        <label className='form-check-label' htmlFor='flexRadioDefault1'>
           Большой набор данных
         </label>
       </div>
-      <div class='form-check'>
+      <div className='form-check'>
         <input
-          class='form-check-input'
+          className='form-check-input'
           type='radio'
           name='flexRadioDefault'
           id='flexRadioDefault2'
-          checked
+          checked={true}
         />
-        <label class='form-check-label' for='flexRadioDefault2'>
+        <label className='form-check-label' htmlFor='flexRadioDefault2'>
           Малый набор данных
         </label>
       </div>

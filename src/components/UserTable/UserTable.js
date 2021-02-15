@@ -1,13 +1,18 @@
 import React from 'react';
-
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+
+import Pagination from '../Pagination/Pagination';
 
 import './UserTable.scss';
 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
   const [sortFlag, setSortFlag] = useState('');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage, setUsersPerPage] = useState(10);
+  const [currentUsers, setCurrentUsers] = useState([]);
 
   useEffect(() => {
     /*
@@ -25,6 +30,13 @@ const UserTable = () => {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    const indexOfLastPost = currentPage * usersPerPage;
+    const indexOfFirstPost = indexOfLastPost - usersPerPage;
+
+    setCurrentUsers(users.slice(indexOfFirstPost, indexOfLastPost));
+  }, [currentPage, users, usersPerPage]);
 
   const sortHandler = ({ target }) => {
     const cell = target.closest('th');
@@ -68,6 +80,18 @@ const UserTable = () => {
     console.log(sortFlag, users);
   };
 
+  const changeSelectHandler = ({ target }) => {
+    const indexOfLastPost = currentPage * usersPerPage;
+    const indexOfFirstPost = indexOfLastPost - usersPerPage;
+
+    setUsersPerPage(target.value);
+    setCurrentUsers(users.slice(indexOfFirstPost, indexOfLastPost));
+  };
+
+  const changePageHandler = (pageNum) => {
+    setCurrentPage(pageNum);
+  };
+
   return (
     <div>
       <table className='table table-hover table-striped table-bordered'>
@@ -76,6 +100,7 @@ const UserTable = () => {
             {['id', 'firstName', 'lastName', 'email', 'phone'].map((param) => {
               return (
                 <th
+                  key={param}
                   data-param={param}
                   onClick={sortHandler}
                   className='table__header'
@@ -91,8 +116,8 @@ const UserTable = () => {
           </tr>
         </thead>
         <tbody>
-          {users &&
-            users.map((user) => {
+          {currentUsers &&
+            currentUsers.map((user) => {
               const { id, firstName, lastName, email, phone } = user;
               return (
                 <tr key={id + firstName}>
@@ -107,44 +132,27 @@ const UserTable = () => {
         </tbody>
       </table>
 
-      <select
-        class='form-select form-select-sm'
-        aria-label='.form-select-sm example'
-      >
-        <option value='10'>10</option>
-        <option value='25'>25</option>
-        <option value='50'>50</option>
-      </select>
+      <div className='info'>
+        <div className='info__bar'>
+          <span className='info__content'>Строк на странице:</span>
 
-      <nav aria-label='Page navigation example'>
-        <ul class='pagination'>
-          <li class='page-item'>
-            <a class='page-link' href='#'>
-              Previous
-            </a>
-          </li>
-          <li class='page-item'>
-            <a class='page-link' href='#'>
-              1
-            </a>
-          </li>
-          <li class='page-item'>
-            <a class='page-link' href='#'>
-              2
-            </a>
-          </li>
-          <li class='page-item'>
-            <a class='page-link' href='#'>
-              3
-            </a>
-          </li>
-          <li class='page-item'>
-            <a class='page-link' href='#'>
-              Next
-            </a>
-          </li>
-        </ul>
-      </nav>
+          <select
+            className='form-select form-select-sm'
+            aria-label='.form-select-sm example'
+            onChange={changeSelectHandler}
+          >
+            <option value='10'>10</option>
+            <option value='25'>25</option>
+            <option value='50'>50</option>
+          </select>
+        </div>
+
+        <Pagination
+          pageNumbers={Math.ceil(users.length / usersPerPage)}
+          onChangePage={changePageHandler}
+          currentPage={currentPage}
+        />
+      </div>
     </div>
   );
 };
