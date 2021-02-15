@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Pagination.scss';
+
 const Pagination = ({ pageNumbers, onChangePage, currentPage }) => {
   const numbers = [];
 
@@ -10,7 +12,7 @@ const Pagination = ({ pageNumbers, onChangePage, currentPage }) => {
   console.log(currentPage);
 
   return (
-    <nav aria-label='Page navigation example'>
+    <nav className='nav'>
       <ul className='pagination'>
         <li
           className={`${'page-item'} ${currentPage === 1 ? 'disabled' : ''}`}
