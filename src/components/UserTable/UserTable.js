@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Pagination from '../Pagination/Pagination';
 
 import './UserTable.scss';
+import PageSelect from '../PageSelect/PageSelect';
 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
@@ -14,21 +15,28 @@ const UserTable = () => {
   const [usersPerPage, setUsersPerPage] = useState(10);
   const [currentUsers, setCurrentUsers] = useState([]);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     /*
     http://www.filltext.com/?rows=1000&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&delay=3&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D&address=%7BaddressObject%7D&description=%7Blorem%7C32%7D
     */
-    axios
-      .get(
-        'http://www.filltext.com/?rows=32&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D&address=%7BaddressObject%7D&description=%7Blorem%7C32%7D'
-      )
-      .then((response) => {
-        console.log(response);
+    const getUsers = async () => {
+      try {
+        setLoading(true);
+
+        const response = await axios.get(
+          'http://www.filltext.com/?rows=32&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D&address=%7BaddressObject%7D&description=%7Blorem%7C32%7D'
+        );
+
         setUsers(response.data);
-      })
-      .catch((error) => {
+        setLoading(false);
+      } catch (error) {
         console.log(error);
-      });
+      }
+    };
+
+    getUsers();
   }, []);
 
   useEffect(() => {
@@ -92,6 +100,14 @@ const UserTable = () => {
     setCurrentPage(pageNum);
   };
 
+  if (loading) {
+    return (
+      <div class='spinner-border' role='status'>
+        <span class='visually-hidden'></span>
+      </div>
+    );
+  }
+
   return (
     <div>
       <table className='table table-hover table-striped table-bordered'>
@@ -132,20 +148,8 @@ const UserTable = () => {
         </tbody>
       </table>
 
-      <div className='info'>
-        <div className='info__bar'>
-          <span className='info__content'>Строк на странице:</span>
-
-          <select
-            className='form-select form-select-sm'
-            aria-label='.form-select-sm example'
-            onChange={changeSelectHandler}
-          >
-            <option value='10'>10</option>
-            <option value='25'>25</option>
-            <option value='50'>50</option>
-          </select>
-        </div>
+      <div className='nav-block'>
+        <PageSelect onChange={changeSelectHandler} />
 
         <Pagination
           pageNumbers={Math.ceil(users.length / usersPerPage)}
