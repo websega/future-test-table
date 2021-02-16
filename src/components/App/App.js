@@ -1,4 +1,4 @@
-import CheckForm from '../CheckForm/CHeckForm';
+import CheckForm from '../CheckForm/CheckForm';
 import UserTable from '../UserTable/UserTable';
 
 /*

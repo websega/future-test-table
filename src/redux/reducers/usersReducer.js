@@ -2,6 +2,7 @@ import {
   FETCH_USERS_FAILURE,
   FETCH_USERS_LOADED,
   FETCH_USERS_REQUESTED,
+  TOGGLE_DATA_COLLECTION,
   SORT_USERS,
 } from '../actions/actionTypes';
 
@@ -10,6 +11,7 @@ const initialState = {
   loading: false,
   error: null,
   isSortAsc: true,
+  isBigCollection: false,
 };
 
 const getSortedUsers = (state, key) => {
@@ -40,8 +42,8 @@ export const usersReducer = (state = initialState, action) => {
     case FETCH_USERS_LOADED:
       return {
         ...state,
-        loading: false,
         users: action.payload,
+        loading: false,
       };
     case FETCH_USERS_FAILURE:
       return {
@@ -55,6 +57,11 @@ export const usersReducer = (state = initialState, action) => {
         ...state,
         users: getSortedUsers(state, action.payload),
         isSortAsc: !state.isSortAsc,
+      };
+    case TOGGLE_DATA_COLLECTION:
+      return {
+        ...state,
+        isBigCollection: !state.isBigCollection,
       };
 
     default:

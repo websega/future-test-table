@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { toggleDataCollection } from '../../redux/actions';
 
 const CheckForm = () => {
-  const checkHandler = () => {};
+  const [currentRadioBtn, setCurrentRadioBtn] = useState('smallData');
+  const dispatch = useDispatch();
+
+  const changeHandler = ({ target }) => {
+    console.log(target);
+    setCurrentRadioBtn(target.id);
+    dispatch(toggleDataCollection());
+  };
 
   return (
     <div>
@@ -9,10 +18,12 @@ const CheckForm = () => {
         <input
           className='form-check-input'
           type='radio'
-          name='bigDataRadio'
-          id='bigDataRadio'
+          name='bigData'
+          id='bigData'
+          checked={currentRadioBtn === 'bigData'}
+          onChange={changeHandler}
         />
-        <label className='form-check-label' htmlFor='bigDataRadio'>
+        <label className='form-check-label' htmlFor='bigData'>
           Большой набор данных
         </label>
       </div>
@@ -20,11 +31,12 @@ const CheckForm = () => {
         <input
           className='form-check-input'
           type='radio'
-          name='smallDataRadio'
-          id='smallDataRadio'
-          checked={true}
+          name='smallData'
+          id='smallData'
+          checked={currentRadioBtn === 'smallData'}
+          onChange={changeHandler}
         />
-        <label className='form-check-label' htmlFor='smallDataRadio'>
+        <label className='form-check-label' htmlFor='smallData'>
           Малый набор данных
         </label>
       </div>

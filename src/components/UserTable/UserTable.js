@@ -12,9 +12,11 @@ import './UserTable.scss';
 
 const UserTable = () => {
   const dispatch = useDispatch();
+
   const loading = useSelector((state) => state.users.loading);
   const users = useSelector((state) => state.users.users);
   const isSortAsc = useSelector((state) => state.users.isSortAsc);
+  const isBigCollection = useSelector((state) => state.users.isBigCollection);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
@@ -22,8 +24,8 @@ const UserTable = () => {
   const [sortingColumn, setSortingColumn] = useState('');
 
   useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
+    dispatch(fetchUsers(isBigCollection));
+  }, [dispatch, isBigCollection]);
 
   useEffect(() => {
     const indexOfLastPost = currentPage * usersPerPage;
