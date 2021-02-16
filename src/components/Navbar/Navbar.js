@@ -17,6 +17,11 @@ const Navbar = () => {
     setInputValue('');
   };
 
+  const clickHandler = () => {
+    setInputValue('');
+    dispatch(filterUsers(inputValue));
+  };
+
   return (
     <nav className='navbar navbar-dark bg-dark'>
       <div className='container-fluid'>
@@ -31,10 +36,17 @@ const Navbar = () => {
             onChange={chageHandler}
             value={inputValue}
           />
-          <button className='btn btn-outline-success' type='submit'>
+          <button
+            className='btn btn-outline-success'
+            type='submit'
+            disabled={inputValue.trim() === ''}
+          >
             Найти
           </button>
         </form>
+        <button className='btn btn-outline-success' onClick={clickHandler}>
+          Показать все
+        </button>
       </div>
     </nav>
   );
