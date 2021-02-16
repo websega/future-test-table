@@ -14,13 +14,16 @@ const UserTable = () => {
   const dispatch = useDispatch();
 
   const loading = useSelector((state) => state.users.loading);
-  const users = useSelector((state) => state.users.users);
   const isSortAsc = useSelector((state) => state.users.isSortAsc);
   const isBigCollection = useSelector((state) => state.users.isBigCollection);
 
+  const users = useSelector((state) => state.users.users);
+  const filteredUsers = useSelector((state) => state.users.filteredUsers);
+
+  const [currentUsers, setCurrentUsers] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
-  const [currentUsers, setCurrentUsers] = useState([]);
   const [sortingColumn, setSortingColumn] = useState('');
 
   useEffect(() => {
@@ -31,8 +34,12 @@ const UserTable = () => {
     const indexOfLastPost = currentPage * usersPerPage;
     const indexOfFirstPost = indexOfLastPost - usersPerPage;
 
-    setCurrentUsers(users.slice(indexOfFirstPost, indexOfLastPost));
-  }, [currentPage, users, usersPerPage]);
+    if (filteredUsers.length > 0) {
+      setCurrentUsers(filteredUsers.slice(indexOfFirstPost, indexOfLastPost));
+    } else {
+      setCurrentUsers(users.slice(indexOfFirstPost, indexOfLastPost));
+    }
+  }, [currentPage, filteredUsers, users, usersPerPage]);
 
   const sortHandler = ({ target }) => {
     const cell = target.closest('th');
@@ -42,15 +49,11 @@ const UserTable = () => {
     setSortingColumn(columnName);
   };
 
-  const changeSelectHandler = ({ target }) => {
-    const indexOfLastPost = currentPage * usersPerPage;
-    const indexOfFirstPost = indexOfLastPost - usersPerPage;
-
+  const selectHandler = ({ target }) => {
     setUsersPerPage(target.value);
-    setCurrentUsers(users.slice(indexOfFirstPost, indexOfLastPost));
   };
 
-  const changePageHandler = (pageNum) => {
+  const paginationHandler = (pageNum) => {
     setCurrentPage(pageNum);
   };
 
@@ -72,11 +75,13 @@ const UserTable = () => {
       />
 
       <div className='nav-block'>
-        <Select onChange={changeSelectHandler} />
+        <Select onChange={selectHandler} />
 
         <Pagination
-          pageNumbers={Math.ceil(users.length / usersPerPage)}
-          onChangePage={changePageHandler}
+          pageNumbers={Math.ceil(
+            (filteredUsers.length || users.length) / usersPerPage
+          )}
+          onChangePage={paginationHandler}
           currentPage={currentPage}
         />
       </div>

@@ -4,10 +4,12 @@ import {
   FETCH_USERS_REQUESTED,
   TOGGLE_DATA_COLLECTION,
   SORT_USERS,
+  FILTER_USERS,
 } from '../actions/actionTypes';
 
 const initialState = {
   users: [],
+  filteredUsers: [],
   loading: false,
   error: null,
   isSortAsc: true,
@@ -17,7 +19,7 @@ const initialState = {
 const getSortedUsers = (state, key) => {
   const modifier = state.isSortAsc ? 1 : -1;
 
-  const sortedUsers = [...state.users].sort((a, b) => {
+  const sortedCurrentUsers = [...state.currentUsers].sort((a, b) => {
     if (a[key] > b[key]) {
       return modifier * 1;
     }
@@ -29,7 +31,33 @@ const getSortedUsers = (state, key) => {
     return 0;
   });
 
-  return sortedUsers;
+  return sortedCurrentUsers;
+};
+
+const filterUsers = (state, searchStr) => {
+  if (searchStr.trim() === '') {
+    return [];
+  }
+
+  const lowerCaseStr = searchStr.trim().toLowerCase();
+
+  const filteredUsers = state.users.filter((user) => {
+    const { id, firstName, lastName, email, phone } = user;
+
+    if (
+      id === +lowerCaseStr ||
+      firstName.toLowerCase().match(lowerCaseStr) ||
+      lastName.toLowerCase().match(lowerCaseStr) ||
+      email.toLowerCase().match(lowerCaseStr) ||
+      phone.toLowerCase().match(lowerCaseStr)
+    ) {
+      return true;
+    }
+
+    return false;
+  });
+
+  return filteredUsers;
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -43,6 +71,7 @@ export const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         users: action.payload,
+        filteredUsers: [],
         loading: false,
       };
     case FETCH_USERS_FAILURE:
@@ -62,6 +91,11 @@ export const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         isBigCollection: !state.isBigCollection,
+      };
+    case FILTER_USERS:
+      return {
+        ...state,
+        filteredUsers: filterUsers(state, action.payload),
       };
 
     default:
