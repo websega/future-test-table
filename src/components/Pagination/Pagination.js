@@ -9,8 +9,6 @@ const Pagination = ({ pageNumbers, onChangePage, currentPage }) => {
     numbers.push(i);
   }
 
-  console.log(currentPage);
-
   return (
     <nav className='nav'>
       <ul className='pagination'>

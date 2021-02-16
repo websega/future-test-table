@@ -1,0 +1,10 @@
+.table {
+  &__header {
+    cursor: pointer;
+  }
+
+  &__cell {
+    display: flex;
+    justify-content: space-between;
+  }
+}

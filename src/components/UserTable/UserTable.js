@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchUsers, sortUsers } from '../../redux/actions';
 
-import Pagination from '../Pagination';
-import Select from '../Select';
+import Pagination from '../Pagination/Pagination';
+import Select from '../Select/Select';
+import SortingTable from '../SortingTable/SortingTable';
 
 import './UserTable.scss';
 
@@ -13,10 +14,12 @@ const UserTable = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.users.loading);
   const users = useSelector((state) => state.users.users);
+  const isSortAsc = useSelector((state) => state.users.isSortAsc);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
   const [currentUsers, setCurrentUsers] = useState([]);
+  const [sortingColumn, setSortingColumn] = useState('');
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -31,9 +34,10 @@ const UserTable = () => {
 
   const sortHandler = ({ target }) => {
     const cell = target.closest('th');
-    const cellName = cell.dataset.cellName;
+    const columnName = cell.dataset.column;
 
-    dispatch(sortUsers(cellName));
+    dispatch(sortUsers(columnName));
+    setSortingColumn(columnName);
   };
 
   const changeSelectHandler = ({ target }) => {
@@ -50,51 +54,20 @@ const UserTable = () => {
 
   if (loading) {
     return (
-      <div class='spinner-border' role='status'>
-        <span class='visually-hidden'></span>
+      <div className='spinner-border' role='status'>
+        <span className='visually-hidden'></span>
       </div>
     );
   }
 
   return (
-    <div>
-      <table className='table table-hover table-striped table-bordered'>
-        <thead>
-          <tr className='table__row'>
-            {['id', 'firstName', 'lastName', 'email', 'phone'].map(
-              (cellName) => {
-                return (
-                  <th
-                    key={cellName}
-                    data-cellName={cellName}
-                    onClick={sortHandler}
-                    className='table__header'
-                  >
-                    <div className='table__cell'>
-                      <span>{cellName}</span>
-                    </div>
-                  </th>
-                );
-              }
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {currentUsers &&
-            currentUsers.map((user) => {
-              const { id, firstName, lastName, email, phone } = user;
-              return (
-                <tr key={id + firstName}>
-                  <td>{id}</td>
-                  <td>{firstName}</td>
-                  <td>{lastName}</td>
-                  <td>{email}</td>
-                  <td>{phone}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
+    <>
+      <SortingTable
+        sortingColumn={sortingColumn}
+        currentUsers={currentUsers}
+        isSortAsc={isSortAsc}
+        onSortHandler={sortHandler}
+      />
 
       <div className='nav-block'>
         <Select onChange={changeSelectHandler} />
@@ -105,7 +78,7 @@ const UserTable = () => {
           currentPage={currentPage}
         />
       </div>
-    </div>
+    </>
   );
 };
 

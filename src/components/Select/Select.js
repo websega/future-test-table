@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './PageSelect.scss'
+import './Select.scss'
 
-const PageSelect = ({ onChange }) => (
+const Select = ({ onChange }) => (
   <div className='select'>
     <span className='select__content'>Строк на странице:</span>
 
@@ -18,4 +18,4 @@ const PageSelect = ({ onChange }) => (
   </div>
 );
 
-export default PageSelect;
+export default Select;
