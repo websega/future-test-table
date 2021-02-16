@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { filterUsers } from '../../redux/actions';
 
+import './Navbar.scss';
+
 const Navbar = () => {
   const dispatch = useDispatch();
 
@@ -28,25 +30,27 @@ const Navbar = () => {
         <a className='navbar-brand' href='!#'>
           Test Table
         </a>
-        <form className='d-flex' onSubmit={submitHandler}>
-          <input
-            className='form-control me-2'
-            type='search'
-            placeholder='Найти'
-            onChange={chageHandler}
-            value={inputValue}
-          />
-          <button
-            className='btn btn-outline-success'
-            type='submit'
-            disabled={inputValue.trim() === ''}
-          >
-            Найти
+        <div className='navbar__right'>
+          <form className='d-flex' onSubmit={submitHandler}>
+            <input
+              className='form-control me-2'
+              type='search'
+              placeholder='Найти'
+              onChange={chageHandler}
+              value={inputValue}
+            />
+            <button
+              className='btn btn-outline-success'
+              type='submit'
+              disabled={inputValue.trim() === ''}
+            >
+              Найти
+            </button>
+          </form>
+          <button className='btn btn-outline-success' onClick={clickHandler}>
+            Показать все
           </button>
-        </form>
-        <button className='btn btn-outline-success' onClick={clickHandler}>
-          Показать все
-        </button>
+        </div>
       </div>
     </nav>
   );
