@@ -7,6 +7,7 @@ import {
   SORT_USERS,
   TOGGLE_DATA_COLLECTION,
   FILTER_USERS,
+  ADD_USER,
 } from './actionTypes';
 
 const usersRequested = () => ({
@@ -35,6 +36,11 @@ export const toggleDataCollection = () => ({
 export const filterUsers = (searchStr) => ({
   type: FILTER_USERS,
   payload: searchStr,
+});
+
+export const addUser = (user) => ({
+  type: ADD_USER,
+  payload: user,
 });
 
 export const fetchUsers = (isBigCollection) => async (dispatch) => {

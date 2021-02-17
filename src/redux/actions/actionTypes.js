@@ -7,3 +7,5 @@ export const SORT_USERS = 'SORT_USERS';
 export const TOGGLE_DATA_COLLECTION = 'TOGGLE_DATA_COLLECTION';
 
 export const FILTER_USERS = 'FILTER_USERS';
+
+export const ADD_USER = 'ADD_USER';

@@ -69,7 +69,7 @@ const UserTable = () => {
     <>
       <SortingTable
         sortingColumn={sortingColumn}
-        currentUsers={currentUsers}
+        data={currentUsers}
         isSortAsc={isSortAsc}
         onSortHandler={sortHandler}
       />
