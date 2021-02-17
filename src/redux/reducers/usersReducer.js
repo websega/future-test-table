@@ -20,7 +20,7 @@ const initialState = {
 const getSortedUsers = (state, key) => {
   const modifier = state.isSortAsc ? 1 : -1;
 
-  const sortedCurrentUsers = [...state.currentUsers].sort((a, b) => {
+  const sortedUsers = [...state.users].sort((a, b) => {
     if (a[key] > b[key]) {
       return modifier * 1;
     }
@@ -32,7 +32,7 @@ const getSortedUsers = (state, key) => {
     return 0;
   });
 
-  return sortedCurrentUsers;
+  return sortedUsers;
 };
 
 const filterUsers = (state, searchStr) => {
