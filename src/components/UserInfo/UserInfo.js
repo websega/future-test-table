@@ -6,7 +6,7 @@ const UserInfo = ({ user }) => {
   const {
     firstName,
     lastName,
-    description,
+    description = 'не задан',
     address: {
       streetAddress = 'не задан',
       city = 'не задан',
@@ -18,7 +18,7 @@ const UserInfo = ({ user }) => {
     <div className='user-info'>
       <span>Выбран пользователь</span> <b>{`${firstName} ${lastName}`}</b>
       <span>Описание:</span>
-      <textarea>{description}</textarea>
+      <textarea defaultValue={description} />
       <span>Адрес проживания:</span> <b>{streetAddress}</b>
       <span>Город:</span> <b>{city}</b>
       <span>Провинция/штат:</span> <b>{state}</b>
