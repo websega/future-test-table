@@ -4,7 +4,13 @@ import './SortingTable.scss';
 
 const columnNames = ['id', 'firstName', 'lastName', 'email', 'phone'];
 
-const SortingTable = ({ sortingColumn, data, isSortAsc, onSortHandler }) => {
+const SortingTable = ({
+  sortingColumn,
+  data,
+  isSortAsc,
+  onSortHandler,
+  onRowClick,
+}) => {
   return (
     <table className='table table-hover table-striped table-bordered'>
       <thead>
@@ -32,7 +38,11 @@ const SortingTable = ({ sortingColumn, data, isSortAsc, onSortHandler }) => {
           data.map((user) => {
             const { id, firstName, lastName, email, phone } = user;
             return (
-              <tr key={id + firstName}>
+              <tr
+                className='table__row'
+                key={id + firstName}
+                onClick={() => onRowClick(user)}
+              >
                 <td>{id}</td>
                 <td>{firstName}</td>
                 <td>{lastName}</td>

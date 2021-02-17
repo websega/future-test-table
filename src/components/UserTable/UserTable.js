@@ -7,6 +7,7 @@ import { fetchUsers, sortUsers } from '../../redux/actions';
 import Pagination from '../Pagination/Pagination';
 import Select from '../Select/Select';
 import SortingTable from '../SortingTable/SortingTable';
+import UserInfo from '../UserInfo/UserInfo';
 
 import './UserTable.scss';
 
@@ -25,6 +26,8 @@ const UserTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
   const [sortingColumn, setSortingColumn] = useState('');
+
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     dispatch(fetchUsers(isBigCollection));
@@ -47,6 +50,10 @@ const UserTable = () => {
 
     dispatch(sortUsers(columnName));
     setSortingColumn(columnName);
+  };
+
+  const rowClickHandler = (user) => {
+    setSelectedUser(user);
   };
 
   const selectHandler = ({ target }) => {
@@ -72,6 +79,7 @@ const UserTable = () => {
         data={currentUsers}
         isSortAsc={isSortAsc}
         onSortHandler={sortHandler}
+        onRowClick={rowClickHandler}
       />
 
       <div className='nav-block'>
@@ -85,6 +93,7 @@ const UserTable = () => {
           currentPage={currentPage}
         />
       </div>
+      {selectedUser && <UserInfo user={selectedUser} />}
     </>
   );
 };
