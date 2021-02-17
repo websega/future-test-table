@@ -5,6 +5,8 @@ import { useFormik } from 'formik';
 
 import { addUser } from '../../redux/actions';
 
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+
 const validationSchema = Yup.object({
   id: Yup.string()
     .matches(/^[0-9]+$/, 'Только цифры')
@@ -30,7 +32,7 @@ const validationSchema = Yup.object({
     .required('Email обязателен!'),
   phone: Yup.string()
     .matches(
-      /\([0-9]{3}\)([0-9]{3})-([0-9]{4})/, //(674)155-1478
+      /\([0-9]{3}\)([0-9]{3})-([0-9]{4})/,
       'Не верный формат номера телефона!'
     )
     .required('Номер телефона обязателен!'),
@@ -102,68 +104,80 @@ const AddRowForm = () => {
                 <td>
                   <label htmlFor='id' className='form-label'></label>
                   <input
-                    className='form-control is-invalid'
+                    className={`${'form-control'} ${
+                      formik.errors.id ? 'is-invalid' : ''
+                    }`}
                     id='id'
                     name='id'
                     type='text'
                     onChange={formik.handleChange}
                     value={formik.values.id}
                   />
-                  <div className='invalid-feedback'>{formik.errors.id}</div>
+                  {formik.errors.id && <ErrorMessage msg={formik.errors.id} />}
                 </td>
                 <td>
                   <label htmlFor='firstName' className='form-label'></label>
                   <input
-                    className='form-control is-invalid'
+                    className={`${'form-control'} ${
+                      formik.errors.firstName ? 'is-invalid' : ''
+                    }`}
                     id='firstName'
                     name='firstName'
                     type='text'
                     onChange={formik.handleChange}
                     value={formik.values.firstName}
                   />
-                  <div className='invalid-feedback'>
-                    {formik.errors.firstName}
-                  </div>
+                  {formik.errors.firstName && (
+                    <ErrorMessage msg={formik.errors.firstName} />
+                  )}
                 </td>
                 <td>
                   <label htmlFor='lastName' className='form-label'></label>
                   <input
-                    className='form-control is-invalid'
+                    className={`${'form-control'} ${
+                      formik.errors.lastName ? 'is-invalid' : ''
+                    }`}
                     id='lastName'
                     name='lastName'
                     type='text'
                     onChange={formik.handleChange}
                     value={formik.values.lastName}
                   />
-                  <div className='invalid-feedback'>
-                    {formik.errors.lastName}
-                  </div>
+                  {formik.errors.lastName && (
+                    <ErrorMessage msg={formik.errors.lastName} />
+                  )}
                 </td>
                 <td>
                   <label htmlFor='email' className='form-label'></label>
                   <input
-                    className='form-control is-invalid'
+                    className={`${'form-control'} ${
+                      formik.errors.email ? 'is-invalid' : ''
+                    }`}
                     id='email'
                     name='email'
                     type='email'
                     onChange={formik.handleChange}
                     value={formik.values.email}
                   />
-                  <div className='invalid-feedback'>{formik.errors.email}</div>
+                  {formik.errors.email && (
+                    <ErrorMessage msg={formik.errors.email} />
+                  )}
                 </td>
                 <td>
                   <label htmlFor='phone' className='form-label'></label>
                   <input
-                    className='form-control is-invalid'
+                    className={`${'form-control'} ${
+                      formik.errors.phone ? 'is-invalid' : ''
+                    }`}
                     id='phone'
                     name='phone'
                     type='phone'
                     onChange={setPhoneMask}
                     value={phone}
                   />
-                  <div className='invalid-feedback is-invalid'>
-                    {formik.errors.phone}
-                  </div>
+                  {formik.errors.phone && (
+                    <ErrorMessage msg={formik.errors.phone} />
+                  )}
                 </td>
               </tr>
             </tbody>

@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-const ErrorMessage = ({error}) => {
-  return (
-    <span>{}</span>
-  )
-}
+const ErrorMessage = ({ msg }) => {
+  return <div className='invalid-feedback'>{msg}</div>;
+};
 
-export default ErrorMessage
+export default ErrorMessage;
