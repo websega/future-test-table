@@ -7,7 +7,12 @@ const UserInfo = ({ user }) => {
     firstName,
     lastName,
     description,
-    address: { streetAddress, city, state, zip },
+    address: {
+      streetAddress = 'не задан',
+      city = 'не задан',
+      state = 'не задан',
+      zip = 'не задан',
+    },
   } = user;
   return (
     <div className='user-info'>

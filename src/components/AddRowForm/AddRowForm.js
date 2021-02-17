@@ -53,6 +53,7 @@ const AddRowForm = () => {
       lastName: '',
       email: '',
       phone: '',
+      address: {},
     },
 
     validationSchema: validationSchema,
