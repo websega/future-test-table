@@ -7,7 +7,6 @@ const CheckForm = () => {
   const dispatch = useDispatch();
 
   const changeHandler = ({ target }) => {
-    console.log(target);
     setCurrentRadioBtn(target.id);
     dispatch(toggleDataCollection());
   };

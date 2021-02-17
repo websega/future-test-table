@@ -6,7 +6,7 @@ import {
   SORT_USERS,
   FILTER_USERS,
   ADD_USER,
-} from '../actions/actionTypes';
+} from './actions/actionTypes';
 
 const initialState = {
   users: [],
@@ -61,7 +61,7 @@ const filterUsers = (state, searchStr) => {
   return filteredUsers;
 };
 
-export const usersReducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USERS_REQUESTED:
       return {

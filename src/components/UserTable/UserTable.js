@@ -14,12 +14,12 @@ import './UserTable.scss';
 const UserTable = () => {
   const dispatch = useDispatch();
 
-  const loading = useSelector((state) => state.users.loading);
-  const isSortAsc = useSelector((state) => state.users.isSortAsc);
-  const isBigCollection = useSelector((state) => state.users.isBigCollection);
+  const loading = useSelector((state) => state.loading);
+  const isSortAsc = useSelector((state) => state.isSortAsc);
+  const isBigCollection = useSelector((state) => state.isBigCollection);
 
-  const users = useSelector((state) => state.users.users);
-  const filteredUsers = useSelector((state) => state.users.filteredUsers);
+  const users = useSelector((state) => state.users);
+  const filteredUsers = useSelector((state) => state.filteredUsers);
 
   const [currentUsers, setCurrentUsers] = useState([]);
 
