@@ -110,6 +110,7 @@ const AddRowForm = () => {
                     id='id'
                     name='id'
                     type='text'
+                    placeholder='Добавьте id'
                     onChange={formik.handleChange}
                     value={formik.values.id}
                   />
@@ -124,6 +125,7 @@ const AddRowForm = () => {
                     id='firstName'
                     name='firstName'
                     type='text'
+                    placeholder='Имя'
                     onChange={formik.handleChange}
                     value={formik.values.firstName}
                   />
@@ -140,6 +142,7 @@ const AddRowForm = () => {
                     id='lastName'
                     name='lastName'
                     type='text'
+                    placeholder='Фамилия'
                     onChange={formik.handleChange}
                     value={formik.values.lastName}
                   />
@@ -156,6 +159,7 @@ const AddRowForm = () => {
                     id='email'
                     name='email'
                     type='email'
+                    placeholder='Электронная почта'
                     onChange={formik.handleChange}
                     value={formik.values.email}
                   />
@@ -172,6 +176,7 @@ const AddRowForm = () => {
                     id='phone'
                     name='phone'
                     type='phone'
+                    placeholder='Номер телефона'
                     onChange={setPhoneMask}
                     value={phone}
                   />
