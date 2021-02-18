@@ -16,17 +16,17 @@ const Pagination = ({ pageNumbers, onChangePage, currentPage }) => {
           className={`${'page-item'} ${currentPage === 1 ? 'disabled' : ''}`}
           onClick={() => onChangePage(1)}
         >
-          <a className='page-link' href='!#'>
+          <button className='page-link' href='!#'>
             First
-          </a>
+          </button>
         </li>
         <li
           className={`${'page-item'} ${currentPage === 1 ? 'disabled' : ''}`}
           onClick={() => onChangePage(currentPage - 1)}
         >
-          <a className='page-link' href='!#'>
+          <button className='page-link' href='!#'>
             Previous
-          </a>
+          </button>
         </li>
         {numbers.map((number) => {
           return (
@@ -36,13 +36,13 @@ const Pagination = ({ pageNumbers, onChangePage, currentPage }) => {
               }`}
               key={`page-${number}`}
             >
-              <a
+              <button
                 className='page-link'
                 href='!#'
                 onClick={() => onChangePage(number)}
               >
                 {number}
-              </a>
+              </button>
             </li>
           );
         })}
@@ -52,9 +52,9 @@ const Pagination = ({ pageNumbers, onChangePage, currentPage }) => {
           }`}
           onClick={() => onChangePage(currentPage + 1)}
         >
-          <a className='page-link' href='!#'>
+          <button className='page-link' href='#'>
             Next
-          </a>
+          </button>
         </li>
         <li
           className={`${'page-item'} ${
@@ -62,9 +62,9 @@ const Pagination = ({ pageNumbers, onChangePage, currentPage }) => {
           }`}
           onClick={() => onChangePage(numbers.length)}
         >
-          <a className='page-link' href='!#'>
+          <button className='page-link' href='#'>
             Last
-          </a>
+          </button>
         </li>
       </ul>
     </nav>
