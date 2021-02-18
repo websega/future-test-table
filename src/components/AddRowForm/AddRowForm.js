@@ -79,8 +79,6 @@ const AddRowForm = () => {
     },
   });
 
-  console.log(formik.values.phone);
-
   return (
     <>
       <button type='button' className='btn btn-primary' onClick={toggleVisible}>
