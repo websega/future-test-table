@@ -38,11 +38,25 @@ const validationSchema = Yup.object({
     .required('Номер телефона обязателен!'),
 });
 
+const getPhoneOfMask = (value) => {
+  let matrix = '(___)___-____';
+  let i = 0;
+
+  let val = value.replace(/\D/g, '');
+
+  return matrix.replace(/./g, function (a) {
+    return /[_\d]/.test(a) && i < val.length
+      ? val.charAt(i++)
+      : i >= val.length
+      ? ''
+      : a;
+  });
+};
+
 const AddRowForm = () => {
   const dispatch = useDispatch();
 
   const [visible, setsVisile] = useState(false);
-  const [phone, setPhone] = useState('');
 
   const toggleVisible = () => {
     setsVisile(!visible);
@@ -65,15 +79,7 @@ const AddRowForm = () => {
     },
   });
 
-  const setPhoneMask = (e) => {
-    const phoneMasked = e.target.value
-      .split('')
-      .filter((w) => !/[(|)-]/.test(w))
-      .reduce((acc, currNum) => acc.replace('x', currNum), '(xxx)xxx-xxxx');
-
-    setPhone(phoneMasked);
-    formik.handleChange(e);
-  };
+  console.log(formik.values.phone);
 
   return (
     <>
@@ -176,9 +182,9 @@ const AddRowForm = () => {
                     id='phone'
                     name='phone'
                     type='phone'
-                    placeholder='Номер телефона'
-                    onChange={setPhoneMask}
-                    value={phone}
+                    placeholder='(900)555-8000'
+                    onChange={formik.handleChange}
+                    value={getPhoneOfMask(formik.values.phone)}
                   />
                   {formik.errors.phone && (
                     <ErrorMessage msg={formik.errors.phone} />
