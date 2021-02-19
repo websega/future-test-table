@@ -14,6 +14,7 @@ const UserInfo = ({ user }) => {
       zip = 'не задан',
     },
   } = user;
+  
   return (
     <div className='user-info'>
       <span>Выбран пользователь</span> <b>{`${firstName} ${lastName}`}</b>
