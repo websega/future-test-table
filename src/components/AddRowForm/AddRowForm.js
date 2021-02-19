@@ -39,27 +39,29 @@ const validationSchema = Yup.object({
 });
 
 const getPhoneOfMask = (value) => {
-  let matrix = '(___)___-____';
+  const matrix = '(___)___-____';
   let i = 0;
 
-  let val = value.replace(/\D/g, '');
+  const val = value.replace(/\D/g, '');
 
-  return matrix.replace(/./g, function (a) {
+  const res = matrix.replace(/./g, function (a) {
     return /[_\d]/.test(a) && i < val.length
-      ? val.charAt(i++)
+      ? val[i++]
       : i >= val.length
       ? ''
       : a;
   });
+
+  return res;
 };
 
 const AddRowForm = () => {
   const dispatch = useDispatch();
 
-  const [visible, setsVisile] = useState(false);
+  const [visible, setVisile] = useState(false);
 
   const toggleVisible = () => {
-    setsVisile(!visible);
+    setVisile(!visible);
   };
 
   const formik = useFormik({
@@ -76,13 +78,14 @@ const AddRowForm = () => {
 
     onSubmit: (values) => {
       dispatch(addUser(values));
+      setVisile(false);
     },
   });
 
   return (
     <>
       <button type='button' className='btn btn-primary' onClick={toggleVisible}>
-        Добавить
+        {!visible ? 'Добавить' : 'Скрыть'}
       </button>
       {visible && (
         <form onSubmit={formik.handleSubmit}>
