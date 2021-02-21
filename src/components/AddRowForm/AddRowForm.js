@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 import { addUser } from '../../redux/actions';
 
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import InputBox from '../InputBox/InputBox';
 
 const validationSchema = Yup.object({
   id: Yup.string()
@@ -110,84 +111,69 @@ const AddRowForm = () => {
             <tbody>
               <tr>
                 <td>
-                  <label htmlFor='id' className='form-label'></label>
-                  <input
-                    className={`${'form-control'} ${
-                      formik.errors.id ? 'is-invalid' : ''
-                    }`}
+                  <InputBox
                     id='id'
-                    name='id'
                     type='text'
+                    value={formik.values.id}
                     placeholder='Добавьте id'
                     onChange={formik.handleChange}
-                    value={formik.values.id}
+                    hasError={!!formik.errors.id}
                   />
+
                   {formik.errors.id && <ErrorMessage msg={formik.errors.id} />}
                 </td>
                 <td>
-                  <label htmlFor='firstName' className='form-label'></label>
-                  <input
-                    className={`${'form-control'} ${
-                      formik.errors.firstName ? 'is-invalid' : ''
-                    }`}
+                  <InputBox
                     id='firstName'
-                    name='firstName'
                     type='text'
+                    value={formik.values.firstName}
                     placeholder='Имя'
                     onChange={formik.handleChange}
-                    value={formik.values.firstName}
+                    hasError={!!formik.errors.firstName}
                   />
+
                   {formik.errors.firstName && (
                     <ErrorMessage msg={formik.errors.firstName} />
                   )}
                 </td>
                 <td>
-                  <label htmlFor='lastName' className='form-label'></label>
-                  <input
-                    className={`${'form-control'} ${
-                      formik.errors.lastName ? 'is-invalid' : ''
-                    }`}
+                  <InputBox
                     id='lastName'
-                    name='lastName'
                     type='text'
+                    value={formik.values.lastName}
                     placeholder='Фамилия'
                     onChange={formik.handleChange}
-                    value={formik.values.lastName}
+                    hasError={!!formik.errors.lastName}
                   />
+
                   {formik.errors.lastName && (
                     <ErrorMessage msg={formik.errors.lastName} />
                   )}
                 </td>
                 <td>
-                  <label htmlFor='email' className='form-label'></label>
-                  <input
-                    className={`${'form-control'} ${
-                      formik.errors.email ? 'is-invalid' : ''
-                    }`}
+                  <InputBox
                     id='email'
-                    name='email'
                     type='email'
+                    value={formik.values.email}
                     placeholder='Электронная почта'
                     onChange={formik.handleChange}
-                    value={formik.values.email}
+                    hasError={!!formik.errors.email}
                   />
+
                   {formik.errors.email && (
                     <ErrorMessage msg={formik.errors.email} />
                   )}
                 </td>
                 <td>
-                  <label htmlFor='phone' className='form-label'></label>
-                  <input
-                    className={`${'form-control'} ${
-                      formik.errors.phone ? 'is-invalid' : ''
-                    }`}
+                  <InputBox
                     id='phone'
-                    name='phone'
                     type='phone'
+                    value={getPhoneOfMask(formik.values.phone)}
                     placeholder='(900)555-8000'
                     onChange={formik.handleChange}
-                    value={getPhoneOfMask(formik.values.phone)}
+                    hasError={!!formik.errors.phone}
                   />
+
                   {formik.errors.phone && (
                     <ErrorMessage msg={formik.errors.phone} />
                   )}
