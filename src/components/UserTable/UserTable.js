@@ -86,10 +86,10 @@ const UserTable = () => {
         <Select onChange={selectHandler} />
 
         <Pagination
-          pageNumbers={Math.ceil(
+          totalPages={Math.ceil(
             (filteredUsers.length || users.length) / usersPerPage
           )}
-          onChangePage={paginationHandler}
+          onChange={paginationHandler}
           currentPage={currentPage}
         />
       </div>

@@ -14,7 +14,7 @@ const initialState = {
   loading: false,
   error: null,
   isSortAsc: true,
-  isBigCollection: false,
+  isBigCollection: true,
 };
 
 const getSortedUsers = (state, key) => {

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { toggleDataCollection } from '../../redux/actions';
 
 const CheckForm = () => {
-  const [currentRadioBtn, setCurrentRadioBtn] = useState('smallData');
+  const [currentRadioBtn, setCurrentRadioBtn] = useState('bigData');
   const dispatch = useDispatch();
 
   const changeHandler = ({ target }) => {
