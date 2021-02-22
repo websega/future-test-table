@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import './Pagination.scss';
 import PaginationItem from './PaginationItem/PaginationItem';
+
+import './Pagination.scss';
 
 const Pagination = ({ totalPages, onChange, currentPage }) => {
   const [numbers, setNumbers] = useState([]);
@@ -19,32 +20,27 @@ const Pagination = ({ totalPages, onChange, currentPage }) => {
   return (
     <nav className='nav'>
       <ul className='pagination'>
-        <li
-          className={`${'page-item'} ${currentPage === 1 ? 'disabled' : ''}`}
-          onClick={() => onChange(1)}
-        >
-          <button className='page-link' href='!#'>
-            First
-          </button>
-        </li>
-        <li
-          className={`${'page-item'} ${currentPage === 1 ? 'disabled' : ''}`}
-          onClick={() => onChange(currentPage - 1)}
-        >
-          <button className='page-link' href='!#'>
-            Previous
-          </button>
-        </li>
+        <PaginationItem
+          disabled={currentPage === 1}
+          onChange={() => onChange(1)}
+          pageNum='First'
+        />
+        <PaginationItem
+          disabled={currentPage === 1}
+          onChange={() => onChange(currentPage - 1)}
+          pageNum='Previous'
+        />
+
         {numbers.map((number) => {
           if (
             // скрываем номер, который равен +3 от текущего и не последний
             (number === currentPage + 3 && number !== numbers.length) ||
-            // скрыть номера, которые находтся на -3 от текущего и при этом текущий номер больше 4
+            // скрыть номера, которые находятся на -3 от текущего и при этом текущий номер больше 4
             (currentPage > 4 && number === currentPage - 3)
           ) {
             return (
               <li className='page-item' key={`page-${number}`}>
-                ...
+                <button className='ellipsis'>. . .</button>
               </li>
             );
           } else if (
@@ -69,27 +65,17 @@ const Pagination = ({ totalPages, onChange, currentPage }) => {
             />
           );
         })}
-        
-        <li
-          className={`${'page-item'} ${
-            currentPage === totalPages ? 'disabled' : ''
-          }`}
-          onClick={() => onChange(currentPage + 1)}
-        >
-          <button className='page-link' href='#'>
-            Next
-          </button>
-        </li>
-        <li
-          className={`${'page-item'} ${
-            currentPage === totalPages ? 'disabled' : ''
-          }`}
-          onClick={() => onChange(numbers.length)}
-        >
-          <button className='page-link' href='#'>
-            Last
-          </button>
-        </li>
+
+        <PaginationItem
+          disabled={currentPage === totalPages}
+          onChange={() => onChange(currentPage + 1)}
+          pageNum='Next'
+        />
+        <PaginationItem
+          disabled={currentPage === totalPages}
+          onChange={() => onChange(numbers.length)}
+          pageNum='Last'
+        />
       </ul>
     </nav>
   );

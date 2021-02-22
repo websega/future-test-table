@@ -8,3 +8,18 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.ellipsis {
+  position: relative;
+  display: block;
+  padding: 1rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #575757;
+  background: none;
+  border: none;
+
+  &:hover {
+    cursor: default;
+  }
+}
