@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import './Pagination.scss';
+import PaginationItem from './PaginationItem/PaginationItem';
 
 const Pagination = ({ totalPages, onChange, currentPage }) => {
   const [numbers, setNumbers] = useState([]);
@@ -60,22 +61,15 @@ const Pagination = ({ totalPages, onChange, currentPage }) => {
           }
 
           return (
-            <li
-              className={`${'page-item'} ${
-                currentPage === number ? 'active' : ''
-              }`}
+            <PaginationItem
               key={`page-${number}`}
-            >
-              <button
-                className='page-link'
-                href='!#'
-                onClick={() => onChange(number)}
-              >
-                {number}
-              </button>
-            </li>
+              active={currentPage === number}
+              onChange={() => onChange(number)}
+              pageNum={number}
+            />
           );
         })}
+        
         <li
           className={`${'page-item'} ${
             currentPage === totalPages ? 'disabled' : ''
