@@ -35,9 +35,12 @@ const Pagination = ({ totalPages, onChange, currentPage }) => {
           </button>
         </li>
         {numbers.map((number) => {
-          // скрытие вверх
-          // скрываем номер, который равен +3 от текущего и не последний
-          if (number === currentPage + 3 && number !== numbers.length) {
+          if (
+            // скрываем номер, который равен +3 от текущего и не последний
+            (number === currentPage + 3 && number !== numbers.length) ||
+            // скрыть номера, которые находтся на -3 от текущего и при этом текущий номер больше 4
+            (currentPage > 4 && number === currentPage - 3)
+          ) {
             return (
               <li className='page-item' key={`page-${number}`}>
                 ...
@@ -45,28 +48,17 @@ const Pagination = ({ totalPages, onChange, currentPage }) => {
             );
           } else if (
             // убирем все номера, которые больше текущего на 3
-            number > currentPage + 3 &&
-            number !== 1 &&
-            number !== numbers.length
-          ) {
-            return null;
-          }
-          // скрытие вниз
-          // скрыть номера, которые находтся на -3 от текущего и при этом текущий номер больше 4
-          else if (currentPage > 4 && number === currentPage - 3) {
-            return (
-              <li className='page-item' key={`page-${number}`}>
-                ...
-              </li>
-            );
-          } else if (
+            (number > currentPage + 3 &&
+              number !== 1 &&
+              number !== numbers.length) ||
             // убрать номера, которые меньше текущего на 3 и при этом не 1 и не последний
-            number < currentPage - 3 &&
-            number !== 1 &&
-            number !== numbers.length
+            (number < currentPage - 3 &&
+              number !== 1 &&
+              number !== numbers.length)
           ) {
             return null;
           }
+
           return (
             <li
               className={`${'page-item'} ${
