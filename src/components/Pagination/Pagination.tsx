@@ -4,8 +4,17 @@ import PaginationItem from './PaginationItem/PaginationItem';
 
 import './Pagination.scss';
 
-const Pagination = ({ totalPages, onChange, currentPage }) => {
-  const [numbers, setNumbers] = useState([]);
+type PaginationPropsType = {
+  totalPages: number;
+  onChange: (pageNum: number) => void;
+  currentPage: number;
+};
+const Pagination = ({
+  totalPages,
+  onChange,
+  currentPage,
+}: PaginationPropsType): JSX.Element => {
+  const [numbers, setNumbers] = useState<Array<number>>([]);
 
   useEffect(() => {
     const temp = [];
@@ -14,21 +23,21 @@ const Pagination = ({ totalPages, onChange, currentPage }) => {
       temp.push(i);
     }
 
-    setNumbers([...temp]);
+    setNumbers(temp);
   }, [totalPages]);
 
   return (
-    <nav className='nav'>
-      <ul className='pagination'>
+    <nav className="nav">
+      <ul className="pagination">
         <PaginationItem
           disabled={currentPage === 1}
           onChange={() => onChange(1)}
-          pageNum='First'
+          pageNum="First"
         />
         <PaginationItem
           disabled={currentPage === 1}
           onChange={() => onChange(currentPage - 1)}
-          pageNum='Previous'
+          pageNum="Previous"
         />
 
         {numbers.map((number) => {
@@ -39,11 +48,14 @@ const Pagination = ({ totalPages, onChange, currentPage }) => {
             (currentPage > 4 && number === currentPage - 3)
           ) {
             return (
-              <li className='page-item' key={`page-${number}`}>
-                <button className='ellipsis'>. . .</button>
+              <li className="page-item" key={`page-${number}`}>
+                <button className="ellipsis" type="button">
+                  . . .
+                </button>
               </li>
             );
-          } else if (
+          }
+          if (
             // убирем все номера, которые больше текущего на 3
             (number > currentPage + 3 &&
               number !== 1 &&
@@ -69,12 +81,12 @@ const Pagination = ({ totalPages, onChange, currentPage }) => {
         <PaginationItem
           disabled={currentPage === totalPages}
           onChange={() => onChange(currentPage + 1)}
-          pageNum='Next'
+          pageNum="Next"
         />
         <PaginationItem
           disabled={currentPage === totalPages}
           onChange={() => onChange(numbers.length)}
-          pageNum='Last'
+          pageNum="Last"
         />
       </ul>
     </nav>

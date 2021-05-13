@@ -2,7 +2,11 @@ import React from 'react';
 
 import './UserInfo.scss';
 
-const UserInfo = ({ user }) => {
+type UserPropsType = {
+  user: any;
+};
+
+const UserInfo = ({ user }: UserPropsType): JSX.Element => {
   const {
     firstName,
     lastName,
@@ -14,9 +18,9 @@ const UserInfo = ({ user }) => {
       zip = 'не задан',
     },
   } = user;
-  
+
   return (
-    <div className='user-info'>
+    <div className="user-info">
       <span>Выбран пользователь</span> <b>{`${firstName} ${lastName}`}</b>
       <span>Описание:</span>
       <textarea defaultValue={description} />

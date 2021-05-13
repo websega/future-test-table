@@ -39,24 +39,26 @@ const validationSchema = Yup.object({
     .required('Номер телефона обязателен!'),
 });
 
-const getPhoneOfMask = (value) => {
+const getPhoneOfMask = (value: string) => {
   const matrix = '(___)___-____';
   let i = 0;
 
   const val = value.replace(/\D/g, '');
 
-  const res = matrix.replace(/./g, function (a) {
-    return /[_\d]/.test(a) && i < val.length
-      ? val[i++]
-      : i >= val.length
-      ? ''
-      : a;
-  });
+  return matrix.replace(/./g, (a) => {
+    if (/[_\d]/.test(a) && i < val.length) {
+      return val[i++];
+    }
 
-  return res;
+    if (i >= val.length) {
+      return '';
+    }
+
+    return a;
+  });
 };
 
-const AddRowForm = () => {
+const AddRowForm = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const [visible, setVisile] = useState(false);
@@ -76,7 +78,7 @@ const AddRowForm = () => {
       description: '',
     },
 
-    validationSchema: validationSchema,
+    validationSchema,
 
     onSubmit: (values) => {
       dispatch(addUser(values));
@@ -86,19 +88,19 @@ const AddRowForm = () => {
 
   return (
     <>
-      <button type='button' className='btn btn-primary' onClick={toggleVisible}>
+      <button type="button" className="btn btn-primary" onClick={toggleVisible}>
         {!visible ? 'Добавить' : 'Скрыть'}
       </button>
       {visible && (
         <form onSubmit={formik.handleSubmit}>
           <button
-            type='submit'
-            className='btn btn-primary'
+            type="submit"
+            className="btn btn-primary"
             disabled={!formik.isValid}
           >
             Добавить в таблицу
           </button>
-          <table className='table table-hover table-bordered'>
+          <table className="table table-hover table-bordered">
             <thead>
               <tr>
                 <th>id</th>
@@ -112,10 +114,10 @@ const AddRowForm = () => {
               <tr>
                 <td>
                   <InputBox
-                    id='id'
-                    type='text'
+                    id="id"
+                    type="text"
                     value={formik.values.id}
-                    placeholder='Добавьте id'
+                    placeholder="Добавьте id"
                     onChange={formik.handleChange}
                     hasError={!!formik.errors.id}
                   />
@@ -124,10 +126,10 @@ const AddRowForm = () => {
                 </td>
                 <td>
                   <InputBox
-                    id='firstName'
-                    type='text'
+                    id="firstName"
+                    type="text"
                     value={formik.values.firstName}
-                    placeholder='Имя'
+                    placeholder="Имя"
                     onChange={formik.handleChange}
                     hasError={!!formik.errors.firstName}
                   />
@@ -138,10 +140,10 @@ const AddRowForm = () => {
                 </td>
                 <td>
                   <InputBox
-                    id='lastName'
-                    type='text'
+                    id="lastName"
+                    type="text"
                     value={formik.values.lastName}
-                    placeholder='Фамилия'
+                    placeholder="Фамилия"
                     onChange={formik.handleChange}
                     hasError={!!formik.errors.lastName}
                   />
@@ -152,10 +154,10 @@ const AddRowForm = () => {
                 </td>
                 <td>
                   <InputBox
-                    id='email'
-                    type='email'
+                    id="email"
+                    type="email"
                     value={formik.values.email}
-                    placeholder='Электронная почта'
+                    placeholder="Электронная почта"
                     onChange={formik.handleChange}
                     hasError={!!formik.errors.email}
                   />
@@ -166,10 +168,10 @@ const AddRowForm = () => {
                 </td>
                 <td>
                   <InputBox
-                    id='phone'
-                    type='phone'
+                    id="phone"
+                    type="phone"
                     value={getPhoneOfMask(formik.values.phone)}
-                    placeholder='(900)555-8000'
+                    placeholder="(900)555-8000"
                     onChange={formik.handleChange}
                     hasError={!!formik.errors.phone}
                   />

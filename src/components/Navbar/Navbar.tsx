@@ -4,16 +4,17 @@ import { filterUsers } from '../../redux/actions';
 
 import './Navbar.scss';
 
-const Navbar = () => {
+const Navbar = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const [inputValue, setInputValue] = useState('');
 
-  const chageHandler = ({ target }) => {
+  const chageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { target } = e;
     setInputValue(target.value);
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(filterUsers(inputValue));
     setInputValue('');
@@ -25,29 +26,33 @@ const Navbar = () => {
   };
 
   return (
-    <nav className='navbar navbar-dark bg-dark'>
-      <div className='container-fluid'>
-        <a className='navbar-brand' href='!#'>
+    <nav className="navbar navbar-dark bg-dark">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="!#">
           Test Table
         </a>
-        <div className='navbar__right'>
-          <form className='d-flex' onSubmit={submitHandler}>
+        <div className="navbar__right">
+          <form className="d-flex" onSubmit={submitHandler}>
             <input
-              className='form-control me-2'
-              type='search'
-              placeholder='Найти'
+              className="form-control me-2"
+              type="search"
+              placeholder="Найти"
               onChange={chageHandler}
               value={inputValue}
             />
             <button
-              className='btn btn-outline-success'
-              type='submit'
+              className="btn btn-outline-success"
+              type="submit"
               disabled={inputValue.trim() === ''}
             >
               Найти
             </button>
           </form>
-          <button className='btn btn-outline-success' onClick={clickHandler}>
+          <button
+            className="btn btn-outline-success"
+            type="button"
+            onClick={clickHandler}
+          >
             Показать все
           </button>
         </div>

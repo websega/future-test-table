@@ -6,7 +6,8 @@ import {
   SORT_USERS,
   FILTER_USERS,
   ADD_USER,
-} from './actions/actionTypes';
+  ActionTypes,
+} from './actions/types';
 
 const initialState = {
   users: [],
@@ -17,10 +18,19 @@ const initialState = {
   isBigCollection: true,
 };
 
-const getSortedUsers = (state, key) => {
+type InitialStateType = {
+  users: any[];
+  filteredUsers: any[];
+  loading: boolean;
+  error: null | string;
+  isSortAsc: boolean;
+  isBigCollection: boolean;
+};
+
+const getSortedUsers = (state: InitialStateType, key: string) => {
   const modifier = state.isSortAsc ? 1 : -1;
 
-  const sortedUsers = [...state.users].sort((a, b) => {
+  return [...state.users].sort((a, b) => {
     if (a[key] > b[key]) {
       return modifier * 1;
     }
@@ -31,18 +41,16 @@ const getSortedUsers = (state, key) => {
 
     return 0;
   });
-
-  return sortedUsers;
 };
 
-const filterUsers = (state, searchStr) => {
+const filterUsers = (state: InitialStateType, searchStr: string) => {
   if (searchStr.trim() === '') {
     return [];
   }
 
   const lowerCaseStr = searchStr.trim().toLowerCase();
 
-  const filteredUsers = state.users.filter((user) => {
+  return state.users.filter((user) => {
     const { id, firstName, lastName, email, phone } = user;
 
     if (
@@ -57,11 +65,12 @@ const filterUsers = (state, searchStr) => {
 
     return false;
   });
-
-  return filteredUsers;
 };
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (
+  state: InitialStateType = initialState,
+  action: ActionTypes
+): InitialStateType => {
   switch (action.type) {
     case FETCH_USERS_REQUESTED:
       return {
@@ -108,3 +117,5 @@ export const reducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export type RootStateType = ReturnType<typeof reducer>;

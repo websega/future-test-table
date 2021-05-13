@@ -1,8 +1,15 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchUsers, sortUsers } from '../../redux/actions';
+import {
+  getFilteredUsers,
+  getLoading,
+  getSortAsc,
+  getUsers,
+  getIsBigCollection,
+} from '../../selectors/selectors';
 
 import Pagination from '../Pagination/Pagination';
 import Select from '../Select/Select';
@@ -11,15 +18,15 @@ import UserInfo from '../UserInfo/UserInfo';
 
 import './UserTable.scss';
 
-const UserTable = () => {
+const UserTable = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  const loading = useSelector((state) => state.loading);
-  const isSortAsc = useSelector((state) => state.isSortAsc);
-  const isBigCollection = useSelector((state) => state.isBigCollection);
+  const loading = useSelector(getLoading);
+  const isSortAsc = useSelector(getSortAsc);
+  const isBigCollection = useSelector(getIsBigCollection);
 
-  const users = useSelector((state) => state.users);
-  const filteredUsers = useSelector((state) => state.filteredUsers);
+  const users = useSelector(getUsers);
+  const filteredUsers = useSelector(getFilteredUsers);
 
   const [currentUsers, setCurrentUsers] = useState([]);
 
@@ -66,8 +73,8 @@ const UserTable = () => {
 
   if (loading) {
     return (
-      <div className='spinner-border' role='status'>
-        <span className='visually-hidden'></span>
+      <div className="spinner-border" role="status">
+        <span className="visually-hidden" />
       </div>
     );
   }
@@ -82,7 +89,7 @@ const UserTable = () => {
         onRowClick={rowClickHandler}
       />
 
-      <div className='nav-block'>
+      <div className="nav-block">
         <Select onChange={selectHandler} />
 
         <Pagination
