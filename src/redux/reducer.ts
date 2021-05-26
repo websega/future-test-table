@@ -7,6 +7,8 @@ import {
   FILTER_USERS,
   ADD_USER,
   ActionTypes,
+  TOOGLE_VISIBLE_ADD_ROW,
+  UserType,
 } from './actions/types';
 
 const initialState = {
@@ -15,19 +17,23 @@ const initialState = {
   loading: false,
   error: null,
   isSortAsc: true,
-  isBigCollection: true,
+  isBigCollection: false,
+  visibleAddRow: false,
 };
 
 type InitialStateType = {
-  users: any[];
-  filteredUsers: any[];
+  users: UserType[];
+  filteredUsers: UserType[];
   loading: boolean;
   error: null | string;
   isSortAsc: boolean;
   isBigCollection: boolean;
+  visibleAddRow: boolean;
 };
 
-const getSortedUsers = (state: InitialStateType, key: string) => {
+export type SortType = 'id' | 'firstName' | 'lastName' | 'email' | 'phone';
+
+const getSortedUsers = (state: InitialStateType, key: SortType) => {
   const modifier = state.isSortAsc ? 1 : -1;
 
   return [...state.users].sort((a, b) => {
@@ -111,6 +117,11 @@ export const reducer = (
       return {
         ...state,
         users: [...state.users, action.payload],
+      };
+    case TOOGLE_VISIBLE_ADD_ROW:
+      return {
+        ...state,
+        visibleAddRow: !state.visibleAddRow,
       };
 
     default:

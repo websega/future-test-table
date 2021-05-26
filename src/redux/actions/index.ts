@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import { RootStateType } from '../reducer';
+import { RootStateType, SortType } from '../reducer';
 
 import {
   FETCH_USERS_FAILURE,
@@ -13,6 +13,8 @@ import {
   FILTER_USERS,
   ADD_USER,
   ActionTypes,
+  TOOGLE_VISIBLE_ADD_ROW,
+  UserType,
 } from './types';
 
 type ThunkType = ThunkAction<
@@ -26,7 +28,7 @@ const usersRequested = (): ActionTypes => ({
   type: FETCH_USERS_REQUESTED,
 });
 
-const usersLoaded = (users: any[]): ActionTypes => ({
+const usersLoaded = (users: UserType[]): ActionTypes => ({
   type: FETCH_USERS_LOADED,
   payload: users,
 });
@@ -36,7 +38,7 @@ const usersError = (error: string): ActionTypes => ({
   payload: error,
 });
 
-export const sortUsers = (columnName: string): ActionTypes => ({
+export const sortUsers = (columnName: SortType): ActionTypes => ({
   type: SORT_USERS,
   payload: columnName,
 });
@@ -50,9 +52,13 @@ export const filterUsers = (searchStr: string): ActionTypes => ({
   payload: searchStr,
 });
 
-export const addUser = (user: any): ActionTypes => ({
+export const addUser = (user: UserType): ActionTypes => ({
   type: ADD_USER,
   payload: user,
+});
+
+export const toggleAddRow = (): ActionTypes => ({
+  type: TOOGLE_VISIBLE_ADD_ROW,
 });
 
 export const fetchUsers =
