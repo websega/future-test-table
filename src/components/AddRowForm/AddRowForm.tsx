@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 
-import { addUser } from '../../redux/actions';
+import { addUser, toggleAddRow } from '../../redux/actions';
+
+import { getVisibleAddRow } from '../../selectors/selectors';
 
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import InputBox from '../InputBox/InputBox';
+import Button from '../Button';
 
 const validationSchema = Yup.object({
   id: Yup.string()
@@ -63,6 +66,8 @@ const AddRowForm = (): JSX.Element => {
 
   const [visible, setVisile] = useState(false);
 
+  const visibleAddRow = useSelector(getVisibleAddRow);
+
   const toggleVisible = () => {
     setVisile(!visible);
   };
@@ -74,7 +79,12 @@ const AddRowForm = (): JSX.Element => {
       lastName: '',
       email: '',
       phone: '',
-      address: {},
+      address: {
+        streetAddress: '',
+        city: '',
+        state: '',
+        zip: '',
+      },
       description: '',
     },
 
@@ -82,24 +92,23 @@ const AddRowForm = (): JSX.Element => {
 
     onSubmit: (values) => {
       dispatch(addUser(values));
-      setVisile(false);
+      dispatch(toggleAddRow());
     },
   });
 
   return (
     <>
-      <button type="button" className="btn btn-primary" onClick={toggleVisible}>
-        {!visible ? 'Добавить' : 'Скрыть'}
-      </button>
-      {visible && (
+      {visibleAddRow && (
         <form onSubmit={formik.handleSubmit}>
-          <button
-            type="submit"
-            className="btn btn-primary"
+          <Button
+            onClick={toggleVisible}
+            size="l"
             disabled={!formik.isValid}
+            isSubmit
           >
             Добавить в таблицу
-          </button>
+          </Button>
+
           <table className="table table-hover table-bordered">
             <thead>
               <tr>
@@ -120,6 +129,7 @@ const AddRowForm = (): JSX.Element => {
                     placeholder="Добавьте id"
                     onChange={formik.handleChange}
                     hasError={!!formik.errors.id}
+                    size="l"
                   />
 
                   {formik.errors.id && <ErrorMessage msg={formik.errors.id} />}
@@ -132,6 +142,7 @@ const AddRowForm = (): JSX.Element => {
                     placeholder="Имя"
                     onChange={formik.handleChange}
                     hasError={!!formik.errors.firstName}
+                    size="l"
                   />
 
                   {formik.errors.firstName && (
@@ -146,6 +157,7 @@ const AddRowForm = (): JSX.Element => {
                     placeholder="Фамилия"
                     onChange={formik.handleChange}
                     hasError={!!formik.errors.lastName}
+                    size="l"
                   />
 
                   {formik.errors.lastName && (
@@ -160,6 +172,7 @@ const AddRowForm = (): JSX.Element => {
                     placeholder="Электронная почта"
                     onChange={formik.handleChange}
                     hasError={!!formik.errors.email}
+                    size="l"
                   />
 
                   {formik.errors.email && (
@@ -174,6 +187,7 @@ const AddRowForm = (): JSX.Element => {
                     placeholder="(900)555-8000"
                     onChange={formik.handleChange}
                     hasError={!!formik.errors.phone}
+                    size="l"
                   />
 
                   {formik.errors.phone && (

@@ -1,15 +1,23 @@
 import React from 'react';
+import { UserType } from '../../redux/actions/types';
+import { SortType } from '../../redux/reducer';
 
 import './SortingTable.scss';
 
-const columnNames = ['id', 'firstName', 'lastName', 'email', 'phone'];
+const columnNames: SortType[] = [
+  'id',
+  'firstName',
+  'lastName',
+  'email',
+  'phone',
+];
 
 type SortingTablePropsType = {
   sortingColumn: string;
-  data: any;
+  data: UserType[];
   isSortAsc: boolean;
-  onSortHandler: () => void;
-  onRowClick: () => void;
+  onSortHandler: (columnName: SortType) => void;
+  onRowClick: (user: UserType) => void;
 };
 
 const SortingTable = ({
@@ -27,8 +35,7 @@ const SortingTable = ({
             return (
               <th
                 key={columnName}
-                data-column={columnName}
-                onClick={onSortHandler}
+                onClick={() => onSortHandler(columnName)}
                 className="table__header"
               >
                 <div className="table__cell">
@@ -45,6 +52,7 @@ const SortingTable = ({
         {data &&
           data.map((user) => {
             const { id, firstName, lastName, email, phone } = user;
+
             return (
               <tr
                 className="table__row"

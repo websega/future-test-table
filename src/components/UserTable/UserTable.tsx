@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchUsers, sortUsers } from '../../redux/actions';
+import { UserType } from '../../redux/actions/types';
+import { SortType } from '../../redux/reducer';
 import {
   getFilteredUsers,
   getLoading,
@@ -18,6 +20,8 @@ import UserInfo from '../UserInfo/UserInfo';
 
 import './UserTable.scss';
 
+const numbersUsersPerPage = ['10 / page', '25 / page', '50 / page'];
+
 const UserTable = (): JSX.Element => {
   const dispatch = useDispatch();
 
@@ -28,13 +32,13 @@ const UserTable = (): JSX.Element => {
   const users = useSelector(getUsers);
   const filteredUsers = useSelector(getFilteredUsers);
 
-  const [currentUsers, setCurrentUsers] = useState([]);
+  const [currentUsers, setCurrentUsers] = useState<UserType[]>([]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage, setUsersPerPage] = useState(10);
-  const [sortingColumn, setSortingColumn] = useState('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [usersPerPage, setUsersPerPage] = useState<number>(10);
+  const [sortingColumn, setSortingColumn] = useState<string>('');
 
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 
   useEffect(() => {
     dispatch(fetchUsers(isBigCollection));
@@ -51,32 +55,25 @@ const UserTable = (): JSX.Element => {
     }
   }, [currentPage, filteredUsers, users, usersPerPage]);
 
-  const sortHandler = ({ target }) => {
-    const cell = target.closest('th');
-    const columnName = cell.dataset.column;
-
+  const sortHandler = (columnName: SortType) => {
     dispatch(sortUsers(columnName));
     setSortingColumn(columnName);
   };
 
-  const rowClickHandler = (user) => {
+  const rowClickHandler = (user: UserType) => {
     setSelectedUser(user);
   };
 
-  const selectHandler = ({ target }) => {
-    setUsersPerPage(target.value);
+  const selectHandler = (userPer: number) => {
+    setUsersPerPage(userPer);
   };
 
-  const paginationHandler = (pageNum) => {
+  const paginationHandler = (pageNum: number) => {
     setCurrentPage(pageNum);
   };
 
   if (loading) {
-    return (
-      <div className="spinner-border" role="status">
-        <span className="visually-hidden" />
-      </div>
-    );
+    return <div>Loading...</div>;
   }
 
   return (
@@ -90,7 +87,7 @@ const UserTable = (): JSX.Element => {
       />
 
       <div className="nav-block">
-        <Select onChange={selectHandler} />
+        <Select onClickItem={selectHandler} items={numbersUsersPerPage} />
 
         <Pagination
           totalPages={Math.ceil(
