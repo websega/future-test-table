@@ -1,0 +1,28 @@
+.icon {
+  position: absolute;
+  top: 50%;
+
+  padding-top: 1px;
+
+  transform: translateY(-50%);
+
+  & > svg {
+    width: $icon-size;
+    height: $icon-size;
+    transition: transform 0.2s linear;
+  }
+}
+
+.rotate {
+  & > svg {
+    transform: rotate(180deg);
+  }
+}
+
+.left {
+  left: 10px;
+}
+
+.right {
+  right: 10px;
+}
