@@ -1,0 +1,46 @@
+.label {
+  position: relative;
+
+  & svg {
+    color: $font-secondary;
+  }
+}
+
+.input {
+  @include font-sans(rem(12), $font-secondary, normal, normal, rem(14));
+  height: rem(33);
+
+  background: #ffffff;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+  padding: 0 rem(10);
+
+  &::placeholder {
+    @include font-sans(rem(12), $font-secondary, normal, normal, rem(14));
+  }
+}
+
+.error {
+  border-color: $error-color;
+}
+
+.large {
+  width: rem(220);
+}
+
+.medium {
+  width: rem(150);
+}
+
+.small {
+  width: rem(110);
+}
+
+.button {
+  min-width: $button-height;
+  height: $button-height;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

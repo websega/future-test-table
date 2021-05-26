@@ -1,12 +1,21 @@
 import React from 'react';
 
+import classNames from 'classnames';
+
+import Icon from '../Icon';
+
+import classes from './InputBox.modules.scss';
+
 type InputBoxType = {
   id: string;
   type: string;
-  value: string;
+  value: string | number;
   placeholder: string;
-  onChange: () => void;
-  hasError: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  hasError?: boolean;
+  size: 'l' | 'm' | 's' | 'b';
+  icon?: JSX.Element;
+  rotateIcon?: boolean;
 };
 
 const InputBox = ({
@@ -16,18 +25,29 @@ const InputBox = ({
   placeholder,
   onChange,
   hasError,
+  size,
+  icon,
+  rotateIcon,
 }: InputBoxType): JSX.Element => {
   return (
-    <label htmlFor={id} className="form-label">
+    <label htmlFor={id} className={classes.label}>
       <input
-        className={`${'form-control'} ${hasError ? 'is-invalid' : ''}`}
+        className={classNames(classes.input, {
+          [classes.error]: hasError,
+          [classes.large]: size === 'l',
+          [classes.medium]: size === 'm',
+          [classes.small]: size === 's',
+          [classes.button]: size === 'b',
+        })}
         id={id}
         name={id}
         type={type}
-        placeholder={placeholder}
         onChange={onChange}
+        placeholder={placeholder}
         value={value}
       />
+
+      {icon && <Icon icon={icon} rotateIcon={rotateIcon} position="right" />}
     </label>
   );
 };
