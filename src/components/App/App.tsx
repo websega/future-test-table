@@ -1,15 +1,15 @@
 import React from 'react';
 
+import Header from '../Header';
 import AddRowForm from '../AddRowForm/AddRowForm';
-import CheckForm from '../CheckForm/CheckForm';
-import Navbar from '../Navbar/Navbar';
+import Filterbar from '../Filterbar/Filterbar';
 import UserTable from '../UserTable/UserTable';
 
 const App = (): JSX.Element => {
   return (
     <div className="App">
-      <Navbar />
-      <CheckForm />
+      <Header />
+      <Filterbar />
       <AddRowForm />
       <UserTable />
     </div>
