@@ -1,0 +1,35 @@
+.wrapper {
+  position: relative;
+}
+
+.list {
+  position: absolute;
+  top: rem(36);
+  left: 0;
+  width: 100%;
+
+  background: $unfilled-bg-btn;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+}
+
+.item {
+  width: 100%;
+  height: $button-height;
+  padding: 5px;
+  @include display(flex, center, center);
+  @include font-sans(rem(14), $font-button-unfilled, normal, normal, rem(15));
+
+  &:hover {
+    background: darken($unfilled-bg-btn, 5%);
+    cursor: pointer;
+  }
+}
+
+.value {
+  @include font-sans(rem(14), $font-button-unfilled, normal, normal, rem(15));
+}
+
+.active {
+  background: darken($unfilled-bg-btn, 5%);
+}
