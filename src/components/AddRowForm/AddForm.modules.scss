@@ -1,0 +1,17 @@
+.form {
+  @include display(flex, space-between, center);
+}
+
+.form {
+  @include display(flex, center, center);
+}
+
+.title {
+  @include font-sans(rem(13), $font-primary, 500, normal, rem(12));
+  text-transform: uppercase;
+}
+
+.block {
+  @include display(flex, center, center);
+  flex-direction: column;
+}

@@ -1,5 +1,9 @@
 .label {
+  @include display(flex, center, center);
+  flex-direction: column;
   position: relative;
+
+  margin: rem(13);
 
   & svg {
     color: $font-secondary;

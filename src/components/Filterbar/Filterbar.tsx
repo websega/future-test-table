@@ -13,6 +13,7 @@ import ClearIcon from '../../assets/images/icons/clear.svg';
 import Button from '../Button';
 import InputBox from '../InputBox';
 import Select from '../Select';
+import Panel from '../Panel';
 
 import classes from './Filterbar.modules.scss';
 
@@ -49,7 +50,7 @@ const Filterbar = (): JSX.Element => {
   };
 
   return (
-    <div className={classes.filters}>
+    <Panel className={classes.filters}>
       <div className={classes.right}>
         <form onSubmit={submitHandler}>
           <InputBox
@@ -67,12 +68,14 @@ const Filterbar = (): JSX.Element => {
         </Button>
       </div>
 
-      <Select items={namesDataSet} onClickItem={selectHandler} />
+      <div className={classes.left}>
+        <Select items={namesDataSet} onClickItem={selectHandler} />
 
-      <Button onClick={toggleVisible} size="l" isFilled>
-        {!visibleAddRow ? 'Добавить' : 'Скрыть'}
-      </Button>
-    </div>
+        <Button onClick={toggleVisible} size="l" isFilled>
+          {!visibleAddRow ? 'Добавить' : 'Скрыть'}
+        </Button>
+      </div>
+    </Panel>
   );
 };
 

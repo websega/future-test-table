@@ -11,7 +11,7 @@ type InputBoxType = {
   type: string;
   value: string | number;
   placeholder: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   hasError?: boolean;
   size: 'l' | 'm' | 's' | 'b';
   icon?: JSX.Element;

@@ -1,0 +1,3 @@
+.errorText {
+  @include font-sans(rem(12), $error-color, normal, normal, rem(12));
+}

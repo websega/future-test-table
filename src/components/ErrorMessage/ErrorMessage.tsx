@@ -1,11 +1,13 @@
 import React from 'react';
 
+import classes from './ErrorMessage.modules.scss';
+
 type ErrorMessagePropsType = {
-  msg: string;
+  children: React.ReactNode;
 };
 
-const ErrorMessage = ({ msg }: ErrorMessagePropsType): JSX.Element => {
-  return <div className="invalid-feedback">{msg}</div>;
+const ErrorMessage = ({ children }: ErrorMessagePropsType): JSX.Element => {
+  return <span className={classes.errorText}>{children}</span>;
 };
 
 export default ErrorMessage;

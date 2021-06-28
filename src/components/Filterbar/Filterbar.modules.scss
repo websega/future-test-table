@@ -1,14 +1,8 @@
 .filters {
   @include display(flex, space-between, center);
-
-  background: $primary-bg;
-  padding: $panel-padding;
-
-  border-top: 1px solid $border-color;
-  border-bottom: 1px solid $border-color;
-  box-shadow: $box-shadow;
 }
 
-.right {
+.right,
+.left {
   @include display(flex, space-between, center);
 }
