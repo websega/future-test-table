@@ -1,10 +1,5 @@
-.nav {
-  @include display(flex, center, center);
-}
-
 .pagination {
-  margin: 0;
-  display: flex;
+  @include display(flex, center, center);
   flex-wrap: wrap;
 }
 

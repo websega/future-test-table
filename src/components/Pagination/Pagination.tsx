@@ -28,7 +28,7 @@ const Pagination = ({
   }, [totalPages]);
 
   return (
-    <nav className={classes.nav}>
+    <nav>
       <ul className={classes.pagination}>
         <PaginationItem
           disabled={currentPage === 1}
