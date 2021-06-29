@@ -9,7 +9,7 @@ import Button from '../Button';
 import classes from './Select.modules.scss';
 
 type SelectPropsType = {
-  onClickItem: (userPer: number) => void;
+  onClickItem: (userPer: string) => void;
   items: Array<string>;
 };
 
@@ -19,7 +19,7 @@ const Select = ({ onClickItem, items }: SelectPropsType): JSX.Element => {
   const [value, setValue] = useState<string>(items[0]);
 
   const handleClickItem = (val: string) => {
-    onClickItem(+val);
+    onClickItem(val);
     setValue(val);
     setIsOpen(false);
   };
@@ -42,7 +42,7 @@ const Select = ({ onClickItem, items }: SelectPropsType): JSX.Element => {
 
     if (e.code === 'Enter' && items) {
       const userPer = items[activeSuggestion];
-      onClickItem(+userPer);
+      onClickItem(userPer);
       setValue(userPer);
       setIsOpen(false);
     }
