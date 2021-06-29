@@ -17,7 +17,7 @@ import Panel from '../Panel';
 
 import classes from './Filterbar.modules.scss';
 
-const namesDataSet = ['Большой набор данных', 'Малый набор данных'];
+const namesDataSet = ['Малый набор данных', 'Большой набор данных'];
 
 const Filterbar = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -28,6 +28,7 @@ const Filterbar = (): JSX.Element => {
 
   const handleChangeFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+    dispatch(filterUsers(e.target.value));
   };
 
   const submitHandler = (e: React.MouseEvent<HTMLFormElement>) => {
@@ -38,7 +39,7 @@ const Filterbar = (): JSX.Element => {
 
   const clickHandler = () => {
     setInputValue('');
-    dispatch(filterUsers(inputValue));
+    dispatch(filterUsers(''));
   };
 
   const toggleVisible = () => {
