@@ -17,37 +17,37 @@ import Panel from '../Panel';
 
 import classes from './AddForm.modules.scss';
 
-type IdInputs = 'id' | 'firstName' | 'lastName' | 'email' | 'phone';
+type NameInputs = 'id' | 'firstName' | 'lastName' | 'email' | 'phone';
 
 type InputsData = {
-  id: IdInputs;
+  name: NameInputs;
   type: string;
   placeholder: string;
 };
 
 const inputsData: InputsData[] = [
   {
-    id: 'id',
+    name: 'id',
     type: 'text',
-    placeholder: 'Добавьте id',
+    placeholder: 'Добавьте name',
   },
   {
-    id: 'firstName',
+    name: 'firstName',
     type: 'text',
     placeholder: 'Имя',
   },
   {
-    id: 'lastName',
+    name: 'lastName',
     type: 'text',
     placeholder: 'Фамилия',
   },
   {
-    id: 'email',
+    name: 'email',
     type: 'email',
     placeholder: 'Электронная почта',
   },
   {
-    id: 'phone',
+    name: 'phone',
     type: 'phone',
     placeholder: '(900)555-8000',
   },
@@ -66,7 +66,7 @@ const AddRowForm = (): JSX.Element => {
 
   const formik = useFormik({
     initialValues: {
-      id: '',
+      id: 0,
       firstName: '',
       lastName: '',
       email: '',
@@ -93,31 +93,31 @@ const AddRowForm = (): JSX.Element => {
       {visibleAddRow && (
         <Panel>
           <form className={classes.form} onSubmit={formik.handleSubmit}>
-            {inputsData.map(({ id, type, placeholder }) => {
+            {inputsData.map(({ name, type, placeholder }) => {
               return (
-                <div className={classes.block} key={id}>
-                  <span className={classes.title}>{id}</span>
+                <div className={classes.block} key={name}>
+                  <span className={classes.title}>{name}</span>
 
                   <InputBox
-                    id={id}
+                    id={name}
                     type={type}
                     value={
-                      type === 'phone'
-                        ? getPhoneOfMask(formik.values[id])
-                        : formik.values[id]
+                      name === 'phone'
+                        ? getPhoneOfMask(formik.values[name])
+                        : formik.values[name]
                     }
                     placeholder={placeholder}
                     onChange={formik.handleChange}
-                    hasError={!!formik.errors[id]}
+                    hasError={!!formik.errors[name]}
                     size="l"
                   />
 
                   <ErrorMessage
                     className={classNames({
-                      [`${classes.errorVisible}`]: !!formik.errors[id],
+                      [`${classes.errorVisible}`]: !!formik.errors[name],
                     })}
                   >
-                    {formik.errors[id] || 'empty'}
+                    {formik.errors[name] || 'empty'}
                   </ErrorMessage>
                 </div>
               );

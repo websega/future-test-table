@@ -17,7 +17,7 @@ type AddressType = {
 };
 
 export type UserType = {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   email: string;

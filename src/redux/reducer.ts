@@ -65,11 +65,11 @@ const filterUsers = (state: InitialStateType, searchStr: string) => {
     const { id, firstName, lastName, email, phone } = user;
 
     if (
-      id === lowerCaseStr ||
-      firstName.toLowerCase().match(lowerCaseStr) ||
-      lastName.toLowerCase().match(lowerCaseStr) ||
-      email.toLowerCase().match(lowerCaseStr) ||
-      phone.toLowerCase().match(lowerCaseStr)
+      id.toString().includes(lowerCaseStr) ||
+      firstName.toLowerCase().includes(lowerCaseStr) ||
+      lastName.toLowerCase().includes(lowerCaseStr) ||
+      email.toLowerCase().includes(lowerCaseStr) ||
+      phone.toLowerCase().includes(lowerCaseStr)
     ) {
       return true;
     }
