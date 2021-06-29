@@ -1,9 +1,9 @@
 ## Data table.
 
 Таблица данных с поиском и сортировкой.
-Посмотреть приложение: [Data table](https://)
+Посмотреть приложение: [Data table](https://data-table-770f3.web.app/)
 
-![alt-текст](https://i.ibb.co/pK37W1B/data-Table.jpg 'preview')
+[![data-Table.jpg](https://i.postimg.cc/50PmQQ2g/data-Table.jpg)](https://postimg.cc/gXZhfJRL)
 
 ##### Scripts
 
