@@ -5,9 +5,14 @@
 }
 
 .container {
+  flex-direction: column;
   width: 1120px;
   height: 100%;
   margin: 0 auto;
 
   margin-top: rem(20);
+}
+
+.loadingWrapper {
+  @include display(flex, center, center);
 }

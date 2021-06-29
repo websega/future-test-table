@@ -17,6 +17,7 @@ import Pagination from '../Pagination/Pagination';
 import Select from '../Select/Select';
 import SortingTable from '../SortingTable/SortingTable';
 import UserInfo from '../UserInfo/UserInfo';
+import Loading from '../Loading';
 
 import classes from './UserTable.modules.scss';
 
@@ -73,33 +74,37 @@ const UserTable = (): JSX.Element => {
     setCurrentPage(pageNum);
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className={classes.container}>
-      <SortingTable
-        sortingColumn={sortingColumn}
-        data={currentUsers}
-        isSortAsc={isSortAsc}
-        onSortHandler={sortHandler}
-        onRowClick={rowClickHandler}
-      />
+      {loading ? (
+        <div className={classes.loadingWrapper}>
+          <Loading />
+        </div>
+      ) : (
+        <>
+          <SortingTable
+            sortingColumn={sortingColumn}
+            data={currentUsers}
+            isSortAsc={isSortAsc}
+            onSortHandler={sortHandler}
+            onRowClick={rowClickHandler}
+          />
 
-      <div className={classes.navBlock}>
-        <Select onClickItem={selectHandler} items={numbersUsersPerPage} />
+          <div className={classes.navBlock}>
+            <Select onClickItem={selectHandler} items={numbersUsersPerPage} />
 
-        <Pagination
-          totalPages={Math.ceil(
-            (filteredUsers.length || users.length) / usersPerPage
-          )}
-          onChange={paginationHandler}
-          currentPage={currentPage}
-        />
-      </div>
+            <Pagination
+              totalPages={Math.ceil(
+                (filteredUsers.length || users.length) / usersPerPage
+              )}
+              onChange={paginationHandler}
+              currentPage={currentPage}
+            />
+          </div>
 
-      {selectedUser && <UserInfo user={selectedUser} />}
+          {selectedUser && <UserInfo user={selectedUser} />}
+        </>
+      )}
     </div>
   );
 };
