@@ -1,9 +1,10 @@
 import React from 'react';
+import { UserType } from '../../redux/actions/types';
 
 import './UserInfo.scss';
 
 type UserPropsType = {
-  user: any;
+  user: UserType;
 };
 
 const UserInfo = ({ user }: UserPropsType): JSX.Element => {

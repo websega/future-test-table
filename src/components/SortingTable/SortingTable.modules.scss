@@ -1,0 +1,26 @@
+.table {
+  width: 100%;
+  margin-bottom: rem(20);
+}
+
+.tableRow {
+  @include font-sans(rem(14), $font-secondary, normal, normal, rem(14));
+  border: 1px solid $border-color;
+  height: rem(43);
+
+  &:nth-child(even) {
+    background: $primary-bg;
+  }
+}
+
+.tableHeader {
+  @include font-sans(rem(14), $font-primary, 600, normal, rem(16));
+  height: rem(60);
+  text-align: left;
+
+  padding: 10px;
+}
+
+.tableCell {
+  padding: 10px;
+}

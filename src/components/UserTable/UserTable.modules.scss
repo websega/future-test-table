@@ -1,0 +1,5 @@
+.navBlock {
+  @include display(flex, space-between, center);
+
+  padding: 10px;
+}

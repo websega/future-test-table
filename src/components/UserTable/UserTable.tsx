@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchUsers, sortUsers } from '../../redux/actions';
 import { UserType } from '../../redux/actions/types';
-import { SortType } from '../../redux/reducer';
+import { ColumnNameType } from '../../redux/reducer';
 import {
   getFilteredUsers,
   getLoading,
@@ -18,7 +18,7 @@ import Select from '../Select/Select';
 import SortingTable from '../SortingTable/SortingTable';
 import UserInfo from '../UserInfo/UserInfo';
 
-import './UserTable.scss';
+import classes from './UserTable.modules.scss';
 
 const numbersUsersPerPage = ['10 / page', '25 / page', '50 / page'];
 
@@ -36,7 +36,8 @@ const UserTable = (): JSX.Element => {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [usersPerPage, setUsersPerPage] = useState<number>(10);
-  const [sortingColumn, setSortingColumn] = useState<string>('');
+  const [sortingColumn, setSortingColumn] =
+    useState<ColumnNameType | null>(null);
 
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 
@@ -55,7 +56,7 @@ const UserTable = (): JSX.Element => {
     }
   }, [currentPage, filteredUsers, users, usersPerPage]);
 
-  const sortHandler = (columnName: SortType) => {
+  const sortHandler = (columnName: ColumnNameType) => {
     dispatch(sortUsers(columnName));
     setSortingColumn(columnName);
   };
@@ -64,8 +65,8 @@ const UserTable = (): JSX.Element => {
     setSelectedUser(user);
   };
 
-  const selectHandler = (userPer: number) => {
-    setUsersPerPage(userPer);
+  const selectHandler = (userPer: string) => {
+    setUsersPerPage(parseInt(userPer, 10));
   };
 
   const paginationHandler = (pageNum: number) => {
@@ -86,7 +87,7 @@ const UserTable = (): JSX.Element => {
         onRowClick={rowClickHandler}
       />
 
-      <div className="nav-block">
+      <div className={classes.navBlock}>
         <Select onClickItem={selectHandler} items={numbersUsersPerPage} />
 
         <Pagination
@@ -97,6 +98,7 @@ const UserTable = (): JSX.Element => {
           currentPage={currentPage}
         />
       </div>
+
       {selectedUser && <UserInfo user={selectedUser} />}
     </>
   );

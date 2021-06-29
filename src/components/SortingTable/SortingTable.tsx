@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { UserType } from '../../redux/actions/types';
-import { SortType } from '../../redux/reducer';
+import { ColumnNameType } from '../../redux/reducer';
+import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter';
 
-import './SortingTable.scss';
+import classes from './SortingTable.modules.scss';
 
-const columnNames: SortType[] = [
+const columnNames: ColumnNameType[] = [
   'id',
   'firstName',
   'lastName',
@@ -13,10 +15,10 @@ const columnNames: SortType[] = [
 ];
 
 type SortingTablePropsType = {
-  sortingColumn: string;
+  sortingColumn: ColumnNameType | null;
   data: UserType[];
   isSortAsc: boolean;
-  onSortHandler: (columnName: SortType) => void;
+  onSortHandler: (columnName: ColumnNameType) => void;
   onRowClick: (user: UserType) => void;
 };
 
@@ -28,21 +30,22 @@ const SortingTable = ({
   onRowClick,
 }: SortingTablePropsType): JSX.Element => {
   return (
-    <table className="table table-hover table-striped table-bordered">
+    <table className={classes.table}>
       <thead>
-        <tr className="table__row">
+        <tr className={classes.tableRow}>
           {columnNames.map((columnName) => {
             return (
               <th
                 key={columnName}
+                className={classes.tableHeader}
                 onClick={() => onSortHandler(columnName)}
-                className="table__header"
               >
-                <div className="table__cell">
-                  <span>{columnName}</span>
-                  {sortingColumn === columnName && !isSortAsc ? '▲' : ''}
-                  {sortingColumn === columnName && isSortAsc ? '▼' : ''}
-                </div>
+                <span>
+                  {capitalizeFirstLetter(columnName.toLocaleLowerCase())}
+                </span>
+
+                {sortingColumn === columnName && !isSortAsc ? '▲' : ''}
+                {sortingColumn === columnName && isSortAsc ? '▼' : ''}
               </th>
             );
           })}
@@ -55,15 +58,15 @@ const SortingTable = ({
 
             return (
               <tr
-                className="table__row"
+                className={classes.tableRow}
                 key={id + firstName}
                 onClick={() => onRowClick(user)}
               >
-                <td>{id}</td>
-                <td>{firstName}</td>
-                <td>{lastName}</td>
-                <td>{email}</td>
-                <td>{phone}</td>
+                <td className={classes.tableCell}>{id}</td>
+                <td className={classes.tableCell}>{firstName}</td>
+                <td className={classes.tableCell}>{lastName}</td>
+                <td className={classes.tableCell}>{email}</td>
+                <td className={classes.tableCell}>{phone}</td>
               </tr>
             );
           })}

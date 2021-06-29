@@ -1,4 +1,4 @@
-import { SortType } from '../reducer';
+import { ColumnNameType } from '../reducer';
 
 export const FETCH_USERS_REQUESTED = 'FETCH_USERS_REQUSTED';
 export const FETCH_USERS_LOADED = 'FETCH_USERS_LOADED';
@@ -38,7 +38,7 @@ type ActionFetchUsersFailure = {
   payload: string | null;
 };
 
-type ActionSortUsers = { type: typeof SORT_USERS; payload: SortType };
+type ActionSortUsers = { type: typeof SORT_USERS; payload: ColumnNameType };
 
 type ActionToggleDataCollection = { type: typeof TOGGLE_DATA_COLLECTION };
 

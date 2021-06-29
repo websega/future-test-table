@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import { RootStateType, SortType } from '../reducer';
+import { RootStateType, ColumnNameType } from '../reducer';
 
 import {
   FETCH_USERS_FAILURE,
@@ -38,7 +38,7 @@ const usersError = (error: string): ActionTypes => ({
   payload: error,
 });
 
-export const sortUsers = (columnName: SortType): ActionTypes => ({
+export const sortUsers = (columnName: ColumnNameType): ActionTypes => ({
   type: SORT_USERS,
   payload: columnName,
 });

@@ -31,9 +31,14 @@ type InitialStateType = {
   visibleAddRow: boolean;
 };
 
-export type SortType = 'id' | 'firstName' | 'lastName' | 'email' | 'phone';
+export type ColumnNameType =
+  | 'id'
+  | 'firstName'
+  | 'lastName'
+  | 'email'
+  | 'phone';
 
-const getSortedUsers = (state: InitialStateType, key: SortType) => {
+const getSortedUsers = (state: InitialStateType, key: ColumnNameType) => {
   const modifier = state.isSortAsc ? 1 : -1;
 
   return [...state.users].sort((a, b) => {
