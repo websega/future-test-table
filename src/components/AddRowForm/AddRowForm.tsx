@@ -95,7 +95,7 @@ const AddRowForm = (): JSX.Element => {
             {inputsData.map(({ id, type, placeholder }) => {
               return (
                 <div className={classes.block} key={id}>
-                  <span className={classes.title}>id</span>
+                  <span className={classes.title}>{id}</span>
 
                   <InputBox
                     id={id}

@@ -7,7 +7,7 @@
 }
 
 .title {
-  @include font-sans(rem(13), $font-primary, 500, normal, rem(12));
+  @include font-sans(rem(13), $font-primary, 600, normal, rem(12));
   text-transform: uppercase;
 }
 
