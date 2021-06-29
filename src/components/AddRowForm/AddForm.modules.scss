@@ -15,3 +15,7 @@
   @include display(flex, center, center);
   flex-direction: column;
 }
+
+.errorVisible {
+  opacity: 1;
+}

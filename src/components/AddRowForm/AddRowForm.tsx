@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useFormik } from 'formik';
+import classNames from 'classnames';
 
 import { addUser, toggleAddRow } from '../../redux/actions';
 
@@ -111,9 +112,13 @@ const AddRowForm = (): JSX.Element => {
                     size="l"
                   />
 
-                  {formik.errors[id] && (
-                    <ErrorMessage>{formik.errors[id]}</ErrorMessage>
-                  )}
+                  <ErrorMessage
+                    className={classNames({
+                      [`${classes.errorVisible}`]: !!formik.errors[id],
+                    })}
+                  >
+                    {formik.errors[id] || 'empty'}
+                  </ErrorMessage>
                 </div>
               );
             })}
