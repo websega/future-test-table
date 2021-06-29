@@ -18,6 +18,7 @@ type ButtonPropsType = {
   rotateIcon?: boolean;
   onMouseDown?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   iconPosition?: IconPositionType;
+  className?: string;
 };
 
 const Button = ({
@@ -31,6 +32,7 @@ const Button = ({
   rotateIcon = false,
   onMouseDown,
   iconPosition = 'left',
+  className,
 }: ButtonPropsType): JSX.Element => {
   return (
     <button
@@ -42,6 +44,7 @@ const Button = ({
         [classes.filled]: isFilled,
         [classes.iconPaddingL]: icon && iconPosition === 'left',
         [classes.iconPaddingR]: icon && iconPosition === 'right',
+        [`${className}`]: !!className,
       })}
       type={isSubmit ? 'submit' : 'button'}
       onClick={onClick}
