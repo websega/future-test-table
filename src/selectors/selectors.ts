@@ -1,8 +1,9 @@
+import { UserType } from '../redux/actions/types';
 import { RootStateType } from '../redux/reducer';
 
-export const getUsers = (state: RootStateType): any[] => state.users;
+export const getUsers = (state: RootStateType): UserType[] => state.users;
 
-export const getFilteredUsers = (state: RootStateType): any[] =>
+export const getFilteredUsers = (state: RootStateType): UserType[] =>
   state.filteredUsers;
 
 export const getLoading = (state: RootStateType): boolean => state.loading;
