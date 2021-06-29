@@ -11,12 +11,17 @@ import classes from './Select.modules.scss';
 type SelectPropsType = {
   onClickItem: (userPer: string) => void;
   items: Array<string>;
+  placeholder?: string;
 };
 
-const Select = ({ onClickItem, items }: SelectPropsType): JSX.Element => {
+const Select = ({
+  onClickItem,
+  items,
+  placeholder,
+}: SelectPropsType): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [activeSuggestion, setActiveSuggestion] = useState<number>(0);
-  const [value, setValue] = useState<string>(items[0]);
+  const [value, setValue] = useState<string>(placeholder || items[0]);
 
   const handleClickItem = (val: string) => {
     onClickItem(val);
@@ -41,9 +46,9 @@ const Select = ({ onClickItem, items }: SelectPropsType): JSX.Element => {
     }
 
     if (e.code === 'Enter' && items) {
-      const userPer = items[activeSuggestion];
-      onClickItem(userPer);
-      setValue(userPer);
+      const val = items[activeSuggestion];
+      onClickItem(val);
+      setValue(val);
       setIsOpen(false);
     }
   };
@@ -55,7 +60,7 @@ const Select = ({ onClickItem, items }: SelectPropsType): JSX.Element => {
       onKeyDown={handleClickKeyDownItem}
     >
       <Button
-        size="s"
+        size="l"
         icon={<ArrowIcon />}
         rotateIcon={isOpen}
         onMouseDown={() => setIsOpen(!isOpen)}
