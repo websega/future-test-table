@@ -1,0 +1,21 @@
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  @include font-sans(rem(14), $font-secondary, normal, normal, rem(16));
+
+  border: 1px solid $border-color;
+
+  padding: rem(15);
+
+  margin-bottom: rem(20);
+
+  & span {
+    margin-top: rem(20);
+  }
+
+  & textarea {
+    max-width: rem(400);
+    min-height: rem(100);
+    margin-top: rem(20);
+  }
+}

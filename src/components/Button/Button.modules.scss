@@ -1,0 +1,62 @@
+.button {
+  @include font-sans(rem(12), #fff, normal, normal, rem(14));
+  @include display(flex, center, center);
+  height: $button-height;
+
+  padding: 0 15px;
+  border-radius: $border-radius;
+
+  transition: background 0.2s linear;
+
+  position: relative;
+}
+
+.large {
+  min-width: rem(106);
+}
+
+.medium {
+  min-width: rem(86);
+}
+
+.small {
+  min-width: $button-height;
+}
+
+.unfilled {
+  color: $font-button-unfilled;
+  background: $unfilled-bg-btn;
+  border: 1px solid $font-button-unfilled;
+
+  &:hover {
+    cursor: pointer;
+    background: $hover-unfilled-bg;
+  }
+
+  & .icon {
+    color: $font-button-unfilled;
+  }
+}
+
+.filled {
+  color: $font-button-filled;
+  background: $filled-bg-btn;
+  border: 1px solid transparent;
+
+  &:hover {
+    cursor: pointer;
+    background: $hover-filled-bg;
+  }
+
+  & .icon {
+    color: $font-button-filled;
+  }
+}
+
+.iconPaddingL {
+  padding-left: 36px;
+}
+
+.iconPaddingR {
+  padding-right: 36px;
+}

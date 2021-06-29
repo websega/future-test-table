@@ -1,0 +1,8 @@
+.filters {
+  @include display(flex, space-between, center);
+}
+
+.right,
+.left {
+  @include display(flex, space-between, center);
+}

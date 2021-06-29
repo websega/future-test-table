@@ -1,0 +1,7 @@
+.header {
+  padding: 20px;
+}
+
+.logo {
+  @include font-sans(rem(18), #112e53, bold, normal, rem(17));
+}

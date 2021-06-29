@@ -1,0 +1,8 @@
+.panel {
+  background: $primary-bg;
+  padding: $panel-padding;
+
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  box-shadow: $box-shadow;
+}

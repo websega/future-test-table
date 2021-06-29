@@ -1,0 +1,21 @@
+.navBlock {
+  @include display(flex, space-between, center);
+
+  padding: 10px;
+  border-bottom: 1px solid $border-color;
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
+}
+
+.container {
+  flex-direction: column;
+  width: 1120px;
+  height: 100%;
+  margin: 0 auto;
+
+  margin-top: rem(20);
+}
+
+.loadingWrapper {
+  @include display(flex, center, center);
+}
