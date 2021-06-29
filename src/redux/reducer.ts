@@ -93,7 +93,7 @@ const filterUsers = (state: InitialStateType, searchStr: string) => {
     const { id, name, email, phone } = user;
 
     if (
-      id.value.includes(lowerCaseStr) ||
+      (id.value && id.value.includes(lowerCaseStr)) ||
       name.first.toLowerCase().includes(lowerCaseStr) ||
       name.last.toLowerCase().includes(lowerCaseStr) ||
       email.toLowerCase().includes(lowerCaseStr) ||
