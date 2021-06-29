@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import classNames from 'classnames';
 
-import TriangleIcon from '../../assets/images/icons/Triangle.svg';
+import ArrowIcon from '../../assets/images/icons/arrow.svg';
 
 import Button from '../Button';
 
@@ -56,7 +56,7 @@ const Select = ({ onClickItem, items }: SelectPropsType): JSX.Element => {
     >
       <Button
         size="s"
-        icon={<TriangleIcon />}
+        icon={<ArrowIcon />}
         rotateIcon={isOpen}
         onMouseDown={() => setIsOpen(!isOpen)}
         iconPosition="right"

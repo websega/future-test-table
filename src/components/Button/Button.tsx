@@ -52,7 +52,12 @@ const Button = ({
       onMouseDown={onMouseDown}
     >
       {icon && (
-        <Icon icon={icon} rotateIcon={rotateIcon} position={iconPosition} />
+        <Icon
+          icon={icon}
+          rotateIcon={rotateIcon}
+          position={iconPosition}
+          size="s"
+        />
       )}
 
       {children}

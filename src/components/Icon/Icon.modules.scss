@@ -7,8 +7,6 @@
   transform: translateY(-50%);
 
   & > svg {
-    width: $icon-size;
-    height: $icon-size;
     transition: transform 0.2s linear;
   }
 }
@@ -25,4 +23,18 @@
 
 .right {
   right: 10px;
+}
+
+.small {
+  & > svg {
+    width: $icon-samll-size;
+    height: $icon-samll-size;
+  }
+}
+
+.large {
+  & > svg {
+    width: $icon-size;
+    height: $icon-size;
+  }
 }
