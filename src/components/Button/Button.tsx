@@ -3,7 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import Icon from '../Icon';
-import { IconPositionType } from '../Icon/Icon';
+import { IconPositionType, IconSizeType } from '../Icon/Icon';
 
 import classes from './Button.modules.scss';
 
@@ -19,6 +19,7 @@ type ButtonPropsType = {
   onMouseDown?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   iconPosition?: IconPositionType;
   className?: string;
+  iconSize?: IconSizeType;
 };
 
 const Button = ({
@@ -27,6 +28,7 @@ const Button = ({
   size,
   isFilled,
   icon,
+  iconSize = 'l',
   isSubmit = false,
   disabled = false,
   rotateIcon = false,
@@ -56,7 +58,7 @@ const Button = ({
           icon={icon}
           rotateIcon={rotateIcon}
           position={iconPosition}
-          size="s"
+          size={iconSize}
         />
       )}
 

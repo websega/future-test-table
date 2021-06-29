@@ -60,6 +60,7 @@ const Select = ({ onClickItem, items }: SelectPropsType): JSX.Element => {
         rotateIcon={isOpen}
         onMouseDown={() => setIsOpen(!isOpen)}
         iconPosition="right"
+        iconSize="s"
       >
         <div className={classes.value}>{value}</div>
       </Button>
