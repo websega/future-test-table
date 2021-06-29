@@ -39,7 +39,7 @@ export type ColumnNameType =
   | 'email'
   | 'phone';
 
-const sortUsersData = (
+const compareValue = (
   a: Omit<ColumnNameType, 'id' | 'firstName' | 'lastName'> | string,
   b: Omit<ColumnNameType, 'id' | 'firstName' | 'lastName'> | string
 ): number => {
@@ -62,23 +62,23 @@ const getSortedUsers = (state: InitialStateType, key: ColumnNameType) => {
       const nameA = a.name.first;
       const nameB = b.name.first;
 
-      return modifier * sortUsersData(nameA, nameB);
+      return modifier * compareValue(nameA, nameB);
     }
 
     if (key === 'lastName') {
       const nameA = a.name.last;
       const nameB = b.name.last;
 
-      return modifier * sortUsersData(nameA, nameB);
+      return modifier * compareValue(nameA, nameB);
     }
 
     if (key === 'id') {
       const nameA = a.id.value;
       const nameB = b.id.value;
-      return modifier * sortUsersData(nameA, nameB);
+      return modifier * compareValue(nameA, nameB);
     }
 
-    return modifier * sortUsersData(a[key], b[key]);
+    return modifier * compareValue(a[key], b[key]);
   });
 };
 
