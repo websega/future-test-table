@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import PaginationItem from './PaginationItem/PaginationItem';
 
-import './Pagination.scss';
+import classes from './Pagination.modules.scss';
 
 type PaginationPropsType = {
   totalPages: number;
   onChange: (pageNum: number) => void;
   currentPage: number;
 };
+
 const Pagination = ({
   totalPages,
   onChange,
@@ -27,8 +28,8 @@ const Pagination = ({
   }, [totalPages]);
 
   return (
-    <nav className="nav">
-      <ul className="pagination">
+    <nav className={classes.nav}>
+      <ul className={classes.pagination}>
         <PaginationItem
           disabled={currentPage === 1}
           onChange={() => onChange(1)}
@@ -48,13 +49,12 @@ const Pagination = ({
             (currentPage > 4 && number === currentPage - 3)
           ) {
             return (
-              <li className="page-item" key={`page-${number}`}>
-                <button className="ellipsis" type="button">
-                  . . .
-                </button>
+              <li key={`page-${number}`} className={classes.ellipsis}>
+                . . .
               </li>
             );
           }
+
           if (
             // убирем все номера, которые больше текущего на 3
             (number > currentPage + 3 &&

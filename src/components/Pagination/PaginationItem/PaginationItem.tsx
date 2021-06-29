@@ -1,5 +1,9 @@
 import React from 'react';
 
+import Button from '../../Button';
+
+import classes from './PaginationItem.modules.scss';
+
 type PaginationItemPropsType = {
   active?: boolean;
   disabled?: boolean;
@@ -14,14 +18,16 @@ const PaginationItem = ({
   pageNum,
 }: PaginationItemPropsType): JSX.Element => {
   return (
-    <li
-      className={`${'page-item'} ${active && 'active'} ${
-        disabled && 'disabled'
-      }`}
-    >
-      <button className="page-link" onClick={onChange} type="button">
+    <li>
+      <Button
+        className={classes.btn}
+        size="s"
+        isFilled={active}
+        disabled={disabled}
+        onClick={onChange}
+      >
         {pageNum}
-      </button>
+      </Button>
     </li>
   );
 };

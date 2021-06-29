@@ -1,6 +1,5 @@
 .nav {
-  display: flex;
-  align-items: center;
+  @include display(flex, center, center);
 }
 
 .pagination {
