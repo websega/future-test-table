@@ -1,7 +1,7 @@
 import React from 'react';
 import { UserType } from '../../redux/actions/types';
 
-import './UserInfo.scss';
+import classes from './UserInfo.modules.scss';
 
 type UserPropsType = {
   user: UserType;
@@ -21,14 +21,28 @@ const UserInfo = ({ user }: UserPropsType): JSX.Element => {
   } = user;
 
   return (
-    <div className="user-info">
-      <span>Выбран пользователь</span> <b>{`${firstName} ${lastName}`}</b>
-      <span>Описание:</span>
-      <textarea defaultValue={description} />
-      <span>Адрес проживания:</span> <b>{streetAddress}</b>
-      <span>Город:</span> <b>{city}</b>
-      <span>Провинция/штат:</span> <b>{state}</b>
-      <span>Индекс:</span> <b>{zip}</b>
+    <div className={classes.userInfo}>
+      <span>
+        Выбран пользователь: <b>{`${firstName} ${lastName}`}</b>
+      </span>
+
+      <span>Описание: {description}</span>
+
+      <span>
+        Адрес проживания: <b>{streetAddress}</b>{' '}
+      </span>
+
+      <span>
+        Город: <b>{city}</b>
+      </span>
+
+      <span>
+        Провинция/штат: <b>{state}</b>
+      </span>
+
+      <span>
+        Индекс: <b>{zip}</b>
+      </span>
     </div>
   );
 };
