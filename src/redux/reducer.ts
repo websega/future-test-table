@@ -1,12 +1,13 @@
+import { FormikValuesType } from '../components/AddRowForm/AddRowForm';
 import {
+  ActionTypes,
+  ADD_USER,
   FETCH_USERS_FAILURE,
   FETCH_USERS_LOADED,
   FETCH_USERS_REQUESTED,
-  TOGGLE_DATA_COLLECTION,
-  SORT_USERS,
   FILTER_USERS,
-  ADD_USER,
-  ActionTypes,
+  SORT_USERS,
+  TOGGLE_DATA_COLLECTION,
   TOOGLE_VISIBLE_ADD_ROW,
   UserType,
 } from './actions/types';
@@ -38,19 +39,46 @@ export type ColumnNameType =
   | 'email'
   | 'phone';
 
+const sortUsersData = (
+  a: Omit<ColumnNameType, 'id' | 'firstName' | 'lastName'> | string,
+  b: Omit<ColumnNameType, 'id' | 'firstName' | 'lastName'> | string
+): number => {
+  if (a > b) {
+    return 1;
+  }
+
+  if (a < b) {
+    return -1;
+  }
+
+  return 0;
+};
+
 const getSortedUsers = (state: InitialStateType, key: ColumnNameType) => {
   const modifier = state.isSortAsc ? 1 : -1;
 
   return [...state.users].sort((a, b) => {
-    if (a[key] > b[key]) {
-      return modifier * 1;
+    if (key === 'firstName') {
+      const nameA = a.name.first;
+      const nameB = b.name.first;
+
+      return modifier * sortUsersData(nameA, nameB);
     }
 
-    if (a[key] < b[key]) {
-      return modifier * -1;
+    if (key === 'lastName') {
+      const nameA = a.name.last;
+      const nameB = b.name.last;
+
+      return modifier * sortUsersData(nameA, nameB);
     }
 
-    return 0;
+    if (key === 'id') {
+      const nameA = a.id.value;
+      const nameB = b.id.value;
+      return modifier * sortUsersData(nameA, nameB);
+    }
+
+    return modifier * sortUsersData(a[key], b[key]);
   });
 };
 
@@ -62,12 +90,12 @@ const filterUsers = (state: InitialStateType, searchStr: string) => {
   const lowerCaseStr = searchStr.trim().toLowerCase();
 
   return state.users.filter((user) => {
-    const { id, firstName, lastName, email, phone } = user;
+    const { id, name, email, phone } = user;
 
     if (
-      id.toString().includes(lowerCaseStr) ||
-      firstName.toLowerCase().includes(lowerCaseStr) ||
-      lastName.toLowerCase().includes(lowerCaseStr) ||
+      id.value.includes(lowerCaseStr) ||
+      name.first.toLowerCase().includes(lowerCaseStr) ||
+      name.last.toLowerCase().includes(lowerCaseStr) ||
       email.toLowerCase().includes(lowerCaseStr) ||
       phone.toLowerCase().includes(lowerCaseStr)
     ) {
@@ -76,6 +104,43 @@ const filterUsers = (state: InitialStateType, searchStr: string) => {
 
     return false;
   });
+};
+
+const addUser = (state: InitialStateType, user: FormikValuesType) => {
+  const newUser = {
+    gender: '',
+    name: {
+      title: '',
+      first: user.firstName,
+      last: user.lastName,
+    },
+    location: {
+      street: {
+        number: 0,
+        name: '',
+      },
+      city: '',
+      state: '',
+      postcode: '',
+      coordinates: {
+        latitude: '',
+        longitude: '',
+      },
+      timezone: {
+        offset: '',
+        description: '',
+      },
+    },
+    email: user.email,
+    phone: user.phone,
+    id: {
+      name: '',
+      value: user.id,
+    },
+    nat: '',
+  };
+
+  return [...state.users, newUser];
 };
 
 export const reducer = (
@@ -121,7 +186,7 @@ export const reducer = (
     case ADD_USER:
       return {
         ...state,
-        users: [...state.users, action.payload],
+        users: addUser(state, action.payload),
       };
     case TOOGLE_VISIBLE_ADD_ROW:
       return {

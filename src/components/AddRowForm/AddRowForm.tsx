@@ -53,6 +53,14 @@ const inputsData: InputsData[] = [
   },
 ];
 
+export type FormikValuesType = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+};
+
 const AddRowForm = (): JSX.Element => {
   const dispatch = useDispatch();
 
@@ -66,18 +74,11 @@ const AddRowForm = (): JSX.Element => {
 
   const formik = useFormik({
     initialValues: {
-      id: 0,
+      id: '',
       firstName: '',
       lastName: '',
       email: '',
       phone: '',
-      address: {
-        streetAddress: '',
-        city: '',
-        state: '',
-        zip: '',
-      },
-      description: '',
     },
 
     validationSchema,

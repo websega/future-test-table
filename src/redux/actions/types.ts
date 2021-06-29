@@ -1,3 +1,4 @@
+import { FormikValuesType } from '../../components/AddRowForm/AddRowForm';
 import { ColumnNameType } from '../reducer';
 
 export const FETCH_USERS_REQUESTED = 'FETCH_USERS_REQUSTED';
@@ -8,23 +9,50 @@ export const TOGGLE_DATA_COLLECTION = 'TOGGLE_DATA_COLLECTION';
 export const FILTER_USERS = 'FILTER_USERS';
 export const ADD_USER = 'ADD_USER';
 export const TOOGLE_VISIBLE_ADD_ROW = 'TOOGLE_VISIBLE_ADD_ROW';
+export interface Name {
+  title: string;
+  first: string;
+  last: string;
+}
 
-type AddressType = {
-  streetAddress: string;
+export interface Coordinates {
+  latitude: string;
+  longitude: string;
+}
+
+export interface Timezone {
+  offset: string;
+  description: string;
+}
+
+export interface Street {
+  number: number;
+  name: string;
+}
+
+export interface Location {
+  street: Street;
   city: string;
   state: string;
-  zip: string;
-};
+  postcode: string;
+  coordinates: Coordinates;
+  timezone: Timezone;
+}
 
-export type UserType = {
-  id: number;
-  firstName: string;
-  lastName: string;
+export interface Id {
+  name: string;
+  value: string;
+}
+
+export interface UserType {
+  gender: string;
+  name: Name;
+  location: Location;
   email: string;
   phone: string;
-  address: AddressType;
-  description: string;
-};
+  id: Id;
+  nat: string;
+}
 
 type ActionFetchUsersRequsted = { type: typeof FETCH_USERS_REQUESTED };
 
@@ -44,7 +72,7 @@ type ActionToggleDataCollection = { type: typeof TOGGLE_DATA_COLLECTION };
 
 type ActionFilterUsers = { type: typeof FILTER_USERS; payload: string };
 
-type ActionAddUsers = { type: typeof ADD_USER; payload: UserType };
+type ActionAddUsers = { type: typeof ADD_USER; payload: FormikValuesType };
 
 type ActionToogleAddRow = { type: typeof TOOGLE_VISIBLE_ADD_ROW };
 

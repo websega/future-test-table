@@ -8,40 +8,29 @@ type UserPropsType = {
 };
 
 const UserInfo = ({ user }: UserPropsType): JSX.Element => {
-  const {
-    firstName,
-    lastName,
-    description = 'не задан',
-    address: {
-      streetAddress = 'не задан',
-      city = 'не задан',
-      state = 'не задан',
-      zip = 'не задан',
-    },
-  } = user;
+  const { name, location } = user;
 
   return (
     <div className={classes.userInfo}>
       <span>
-        Выбран пользователь: <b>{`${firstName} ${lastName}`}</b>
-      </span>
-
-      <span>Описание: {description}</span>
-
-      <span>
-        Адрес проживания: <b>{streetAddress}</b>{' '}
+        Выбран пользователь: <b>{`${name.first} ${name.last}`}</b>
       </span>
 
       <span>
-        Город: <b>{city}</b>
+        Адрес проживания:{' '}
+        <b>{`${location.street.name} ${location.street.number}`}</b>
       </span>
 
       <span>
-        Провинция/штат: <b>{state}</b>
+        Город: <b>{location.city}</b>
       </span>
 
       <span>
-        Индекс: <b>{zip}</b>
+        Провинция/штат: <b>{location.state}</b>
+      </span>
+
+      <span>
+        Индекс: <b>{location.postcode}</b>
       </span>
     </div>
   );

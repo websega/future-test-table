@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { FormikValuesType } from '../../components/AddRowForm/AddRowForm';
 
 import { RootStateType, ColumnNameType } from '../reducer';
 
@@ -52,7 +53,7 @@ export const filterUsers = (searchStr: string): ActionTypes => ({
   payload: searchStr,
 });
 
-export const addUser = (user: UserType): ActionTypes => ({
+export const addUser = (user: FormikValuesType): ActionTypes => ({
   type: ADD_USER,
   payload: user,
 });
@@ -67,14 +68,14 @@ export const fetchUsers =
     try {
       const getUrl = () =>
         isBigCollection
-          ? 'http://www.filltext.com/?rows=1000&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&delay=3&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D&address=%7BaddressObject%7D&description=%7Blorem%7C32%7D'
-          : 'http://www.filltext.com/?rows=32&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D&address=%7BaddressObject%7D&description=%7Blorem%7C32%7D';
+          ? 'https://randomuser.me/api/?results=1000&inc=gender,name,location,email,phone,id,nat&noinfo'
+          : 'https://randomuser.me/api/?results=100&inc=gender,name,location,email,phone,id,nat&noinfo';
 
       dispatch(usersRequested());
 
       const response = await axios.get(getUrl());
 
-      dispatch(usersLoaded(response.data));
+      dispatch(usersLoaded(response.data.results));
     } catch (error) {
       dispatch(usersError(error));
     }

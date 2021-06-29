@@ -53,16 +53,17 @@ const SortingTable = ({
       <tbody>
         {data &&
           data.map((user) => {
-            const { id, firstName, lastName, email, phone } = user;
+            const { id, name, email, phone } = user;
+
             return (
               <tr
                 className={classes.tableRow}
-                key={id + firstName}
+                key={id.value + name.first + name.last}
                 onClick={() => onRowClick(user)}
               >
-                <td className={classes.tableCell}>{id}</td>
-                <td className={classes.tableCell}>{firstName}</td>
-                <td className={classes.tableCell}>{lastName}</td>
+                <td className={classes.tableCell}>{id.value}</td>
+                <td className={classes.tableCell}>{name.first}</td>
+                <td className={classes.tableCell}>{name.last}</td>
                 <td className={classes.tableCell}>{email}</td>
                 <td className={classes.tableCell}>{phone}</td>
               </tr>
