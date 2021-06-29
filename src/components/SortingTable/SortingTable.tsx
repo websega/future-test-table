@@ -30,48 +30,48 @@ const SortingTable = ({
   onRowClick,
 }: SortingTablePropsType): JSX.Element => {
   return (
-    <table className={classes.table}>
-      <thead>
-        <tr className={classes.tableRow}>
-          {columnNames.map((columnName) => {
-            return (
-              <th
-                key={columnName}
-                className={classes.tableHeader}
-                onClick={() => onSortHandler(columnName)}
-              >
-                <span>
-                  {capitalizeFirstLetter(columnName.toLocaleLowerCase())}
-                </span>
-
-                {sortingColumn === columnName && !isSortAsc ? '▲' : ''}
-                {sortingColumn === columnName && isSortAsc ? '▼' : ''}
-              </th>
-            );
-          })}
-        </tr>
-      </thead>
-      <tbody>
-        {data &&
-          data.map((user) => {
-            const { id, firstName, lastName, email, phone } = user;
-
-            return (
-              <tr
-                className={classes.tableRow}
-                key={id + firstName}
-                onClick={() => onRowClick(user)}
-              >
-                <td className={classes.tableCell}>{id}</td>
-                <td className={classes.tableCell}>{firstName}</td>
-                <td className={classes.tableCell}>{lastName}</td>
-                <td className={classes.tableCell}>{email}</td>
-                <td className={classes.tableCell}>{phone}</td>
-              </tr>
-            );
-          })}
-      </tbody>
-    </table>
+    <div className={classes.scrollWrapper}>
+      <table className={classes.table}>
+        <thead>
+          <tr className={classes.tableRow}>
+            {columnNames.map((columnName) => {
+              return (
+                <th
+                  key={columnName}
+                  className={classes.tableHeader}
+                  onClick={() => onSortHandler(columnName)}
+                >
+                  <span>
+                    {capitalizeFirstLetter(columnName.toLocaleLowerCase())}
+                  </span>
+                  {sortingColumn === columnName && !isSortAsc ? '▲' : ''}
+                  {sortingColumn === columnName && isSortAsc ? '▼' : ''}
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {data &&
+            data.map((user) => {
+              const { id, firstName, lastName, email, phone } = user;
+              return (
+                <tr
+                  className={classes.tableRow}
+                  key={id + firstName}
+                  onClick={() => onRowClick(user)}
+                >
+                  <td className={classes.tableCell}>{id}</td>
+                  <td className={classes.tableCell}>{firstName}</td>
+                  <td className={classes.tableCell}>{lastName}</td>
+                  <td className={classes.tableCell}>{email}</td>
+                  <td className={classes.tableCell}>{phone}</td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

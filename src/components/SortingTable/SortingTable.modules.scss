@@ -1,6 +1,11 @@
+.scrollWrapper {
+  height: calc(100vh - 250px);
+  overflow-y: auto;
+  margin-bottom: rem(20);
+}
+
 .table {
   width: 100%;
-  margin-bottom: rem(20);
 }
 
 .tableRow {
