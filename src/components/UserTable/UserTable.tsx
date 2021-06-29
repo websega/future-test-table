@@ -78,7 +78,7 @@ const UserTable = (): JSX.Element => {
   }
 
   return (
-    <>
+    <div className={classes.container}>
       <SortingTable
         sortingColumn={sortingColumn}
         data={currentUsers}
@@ -100,7 +100,7 @@ const UserTable = (): JSX.Element => {
       </div>
 
       {selectedUser && <UserInfo user={selectedUser} />}
-    </>
+    </div>
   );
 };
 
