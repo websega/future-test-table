@@ -3,7 +3,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { FormikValuesType } from '../../components/AddRowForm/AddRowForm';
 
-import { RootStateType, ColumnNameType } from '../reducer';
+import { RootStateType, ColumnNameType, FeatureFilterType } from '../reducer';
 
 import {
   FETCH_USERS_FAILURE,
@@ -16,6 +16,7 @@ import {
   ActionTypes,
   TOOGLE_VISIBLE_ADD_ROW,
   UserType,
+  FILTER_USERS_BY_FEATURE,
 } from './types';
 
 type ThunkType = ThunkAction<
@@ -51,6 +52,14 @@ export const toggleDataCollection = (): ActionTypes => ({
 export const filterUsers = (searchStr: string): ActionTypes => ({
   type: FILTER_USERS,
   payload: searchStr,
+});
+
+export const filterUsersByFeature = (
+  feature: FeatureFilterType,
+  value: string
+): ActionTypes => ({
+  type: FILTER_USERS_BY_FEATURE,
+  payload: { feature, value },
 });
 
 export const addUser = (user: FormikValuesType): ActionTypes => ({

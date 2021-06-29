@@ -9,7 +9,7 @@ import Button from '../Button';
 import classes from './Select.modules.scss';
 
 type SelectPropsType = {
-  onClickItem: (userPer: string) => void;
+  onClickItem: (val: string) => void;
   items: Array<string>;
   placeholder?: string;
 };

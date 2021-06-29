@@ -6,6 +6,7 @@ import {
   FETCH_USERS_LOADED,
   FETCH_USERS_REQUESTED,
   FILTER_USERS,
+  FILTER_USERS_BY_FEATURE,
   SORT_USERS,
   TOGGLE_DATA_COLLECTION,
   TOOGLE_VISIBLE_ADD_ROW,
@@ -20,6 +21,7 @@ const initialState = {
   isSortAsc: true,
   isBigCollection: false,
   visibleAddRow: false,
+  nationalities: [],
 };
 
 type InitialStateType = {
@@ -30,6 +32,7 @@ type InitialStateType = {
   isSortAsc: boolean;
   isBigCollection: boolean;
   visibleAddRow: boolean;
+  nationalities: string[];
 };
 
 export type ColumnNameType =
@@ -143,6 +146,20 @@ const addUser = (state: InitialStateType, user: FormikValuesType) => {
   return [...state.users, newUser];
 };
 
+export type FeatureFilterType = 'nat' | 'gender';
+
+const filterUsersByFeature = (
+  state: InitialStateType,
+  feature: FeatureFilterType,
+  value: string
+) => {
+  return state.users.filter((user) => user[feature] === value);
+};
+
+const getNationalitites = (users: UserType[]) => {
+  return Array.from(new Set(users.map((user) => user.nat)));
+};
+
 export const reducer = (
   state: InitialStateType = initialState,
   action: ActionTypes
@@ -159,6 +176,7 @@ export const reducer = (
         users: action.payload,
         filteredUsers: [],
         loading: false,
+        nationalities: getNationalitites(action.payload),
       };
     case FETCH_USERS_FAILURE:
       return {
@@ -183,6 +201,14 @@ export const reducer = (
         ...state,
         filteredUsers: filterUsers(state, action.payload),
       };
+    case FILTER_USERS_BY_FEATURE: {
+      const { feature, value } = action.payload;
+
+      return {
+        ...state,
+        filteredUsers: filterUsersByFeature(state, feature, value),
+      };
+    }
     case ADD_USER:
       return {
         ...state,

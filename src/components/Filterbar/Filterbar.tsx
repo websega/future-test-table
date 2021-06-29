@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   filterUsers,
+  filterUsersByFeature,
   toggleAddRow,
   toggleDataCollection,
 } from '../../redux/actions';
-import { getVisibleAddRow } from '../../selectors/selectors';
+import { FeatureFilterType } from '../../redux/reducer';
+import { getNationalities, getVisibleAddRow } from '../../selectors/selectors';
 
 import ClearIcon from '../../assets/images/icons/clear.svg';
 
@@ -18,11 +20,13 @@ import Panel from '../Panel';
 import classes from './Filterbar.modules.scss';
 
 const namesDataSet = ['Малый набор данных', 'Большой набор данных'];
+const genderDataSet = ['male', 'female'];
 
 const Filterbar = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const visibleAddRow = useSelector(getVisibleAddRow);
+  const nationalities = useSelector(getNationalities);
 
   const [inputValue, setInputValue] = useState<string>('');
 
@@ -46,8 +50,14 @@ const Filterbar = (): JSX.Element => {
     dispatch(toggleAddRow());
   };
 
-  const selectHandler = () => {
+  const selectDataHandler = () => {
     dispatch(toggleDataCollection());
+  };
+
+  const selectHandler = (feature: FeatureFilterType, value: string) => {
+    console.log('### ~ value', value);
+
+    dispatch(filterUsersByFeature(feature, value));
   };
 
   return (
@@ -70,7 +80,19 @@ const Filterbar = (): JSX.Element => {
       </div>
 
       <div className={classes.left}>
-        <Select items={namesDataSet} onClickItem={selectHandler} />
+        <Select items={namesDataSet} onClickItem={selectDataHandler} />
+
+        <Select
+          items={genderDataSet}
+          onClickItem={(value) => selectHandler('gender', value)}
+          placeholder="Гендер"
+        />
+
+        <Select
+          items={nationalities}
+          onClickItem={(value) => selectHandler('nat', value)}
+          placeholder="Национальность"
+        />
 
         <Button onClick={toggleVisible} size="l" isFilled>
           {!visibleAddRow ? 'Добавить' : 'Скрыть'}

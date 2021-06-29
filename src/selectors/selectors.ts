@@ -15,3 +15,6 @@ export const getIsBigCollection = (state: RootStateType): boolean =>
 
 export const getVisibleAddRow = (state: RootStateType): boolean =>
   state.visibleAddRow;
+
+export const getNationalities = (state: RootStateType): string[] =>
+  state.nationalities;
