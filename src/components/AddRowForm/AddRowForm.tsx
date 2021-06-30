@@ -86,6 +86,7 @@ const AddRowForm = (): JSX.Element => {
     onSubmit: (values) => {
       dispatch(addUser(values));
       dispatch(toggleAddRow());
+      formik.resetForm();
     },
   });
 
