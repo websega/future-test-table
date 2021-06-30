@@ -9,6 +9,7 @@
   transition: background 0.2s linear;
 
   position: relative;
+  margin-right: rem(20);
 
   &[disabled] {
     background: $disabled-bg-btn;
