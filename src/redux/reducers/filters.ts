@@ -11,8 +11,9 @@ const initialState = {
 };
 
 export type FilterFieldType = keyof typeof initialState;
+export type FiltersType = Record<FilterFieldType, string>;
 
-type InitialStateType = Record<FilterFieldType, string>;
+type InitialStateType = FiltersType;
 
 export const filtersReducer = (
   state: InitialStateType = initialState,

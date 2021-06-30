@@ -1,6 +1,6 @@
 import { UserType } from '../redux/actions/users/types';
 import { RootStateType } from '../redux/reducers';
-import { FilterFieldType } from '../redux/reducers/filters';
+import { FiltersType } from '../redux/reducers/filters';
 
 export const getUsers = (state: RootStateType): UserType[] => state.users.users;
 
@@ -19,6 +19,4 @@ export const getVisibleAddRow = (state: RootStateType): boolean =>
 export const getNationalities = (state: RootStateType): string[] =>
   state.users.nationalities;
 
-export const getFilters = (
-  state: RootStateType
-): Record<FilterFieldType, string> => state.filters;
+export const getFilters = (state: RootStateType): FiltersType => state.filters;
