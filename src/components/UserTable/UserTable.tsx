@@ -14,6 +14,8 @@ import {
   getUsers,
 } from '../../selectors/selectors';
 
+import NotFoundIcon from '../../assets/images/icons/not-found.svg';
+
 import Loading from '../Loading';
 import Pagination from '../Pagination/Pagination';
 import Select from '../Select/Select';
@@ -109,6 +111,18 @@ const UserTable = (): JSX.Element => {
   const paginationHandler = (pageNum: number) => {
     setCurrentPage(pageNum);
   };
+
+  if (filteredUsers.length === 0 && !loading) {
+    return (
+      <div className={classes.container}>
+        <div className={classes.notFound}>
+          <NotFoundIcon />
+
+          <span className={classes.message}>Измените настройки фильтров</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={classes.container}>
