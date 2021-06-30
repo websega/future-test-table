@@ -44,10 +44,6 @@ const UserTable = (): JSX.Element => {
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 
   useEffect(() => {
-    setFilteredUsers(users);
-  }, [users]);
-
-  useEffect(() => {
     dispatch(fetchUsers(isBigCollection));
   }, [dispatch, isBigCollection]);
 
@@ -55,6 +51,7 @@ const UserTable = (): JSX.Element => {
     let tempFilteredUsers = users;
 
     if (!gender && !nationality && !search) {
+      setFilteredUsers(users);
       return;
     }
 
