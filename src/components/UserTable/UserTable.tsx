@@ -52,12 +52,7 @@ const UserTable = (): JSX.Element => {
   useEffect(() => {
     let tempFilteredUsers = users;
 
-    if (!gender && !nationality && !search) {
-      setFilteredUsers(users);
-      return;
-    }
-
-    tempFilteredUsers = tempFilteredUsers.filter((user) => {
+    const filterByFeature = (user: UserType) => {
       if (user.gender !== gender && gender !== '') {
         return false;
       }
@@ -67,9 +62,9 @@ const UserTable = (): JSX.Element => {
       }
 
       return true;
-    });
+    };
 
-    tempFilteredUsers = tempFilteredUsers.filter((user) => {
+    const filterBySearchSting = (user: UserType) => {
       const { name, email, phone } = user;
       const comparedSearchString = search.toLowerCase();
 
@@ -83,7 +78,11 @@ const UserTable = (): JSX.Element => {
       }
 
       return false;
-    });
+    };
+
+    tempFilteredUsers = tempFilteredUsers.filter(
+      (user) => filterByFeature(user) && filterBySearchSting(user)
+    );
 
     setFilteredUsers(tempFilteredUsers);
   }, [gender, nationality, search, users]);
