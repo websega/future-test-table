@@ -1,5 +1,6 @@
 import React from 'react';
-import { UserType } from '../../redux/actions/types';
+
+import { UserType } from '../../redux/actions/users/types';
 
 import classes from './UserInfo.modules.scss';
 

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
 
-import { addUser, toggleAddRow } from '../../redux/actions';
+import { addUser, toggleAddRow } from '../../redux/actions/users';
 
 import { getVisibleAddRow } from '../../selectors/selectors';
 

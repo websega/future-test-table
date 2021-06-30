@@ -2,26 +2,27 @@ import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchUsers, sortUsers } from '../../redux/actions';
-import { UserType } from '../../redux/actions/types';
-import { ColumnNameType } from '../../redux/reducer';
+import { fetchUsers, sortUsers } from '../../redux/actions/users';
+import { UserType } from '../../redux/actions/users/types';
+import { ColumnNameType } from '../../redux/reducers/users';
+
 import {
-  getFilteredUsers,
+  getFilters,
+  getIsBigCollection,
   getLoading,
   getSortAsc,
   getUsers,
-  getIsBigCollection,
 } from '../../selectors/selectors';
 
+import Loading from '../Loading';
 import Pagination from '../Pagination/Pagination';
 import Select from '../Select/Select';
 import SortingTable from '../SortingTable/SortingTable';
 import UserInfo from '../UserInfo/UserInfo';
-import Loading from '../Loading';
 
 import classes from './UserTable.modules.scss';
 
-const numbersUsersPerPage = ['10 / page', '25 / page', '50 / page'];
+const numbersUsersPerPage = ['10', '25', '50'];
 
 const UserTable = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -29,11 +30,11 @@ const UserTable = (): JSX.Element => {
   const loading = useSelector(getLoading);
   const isSortAsc = useSelector(getSortAsc);
   const isBigCollection = useSelector(getIsBigCollection);
-
   const users = useSelector(getUsers);
-  const filteredUsers = useSelector(getFilteredUsers);
+  const { gender, nationality, search } = useSelector(getFilters);
 
-  const [currentUsers, setCurrentUsers] = useState<UserType[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<UserType[]>([]);
+  const [visibleUsers, setVisibleUsers] = useState<UserType[]>([]);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [usersPerPage, setUsersPerPage] = useState<number>(10);
@@ -43,18 +44,56 @@ const UserTable = (): JSX.Element => {
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 
   useEffect(() => {
+    setFilteredUsers(users);
+  }, [users]);
+
+  useEffect(() => {
     dispatch(fetchUsers(isBigCollection));
   }, [dispatch, isBigCollection]);
+
+  useEffect(() => {
+    let tempFilteredUsers = users;
+
+    if (!gender && !nationality && !search) {
+      return;
+    }
+
+    tempFilteredUsers = tempFilteredUsers.filter((user) => {
+      if (user.gender !== gender && gender !== '') {
+        return false;
+      }
+
+      if (user.nat !== nationality && nationality !== '') {
+        return false;
+      }
+
+      return true;
+    });
+
+    tempFilteredUsers = tempFilteredUsers.filter((user) => {
+      const { name, email, phone } = user;
+      const comparedSearchString = search.toLowerCase();
+
+      if (
+        name.first.toLowerCase().includes(comparedSearchString) ||
+        name.last.toLowerCase().includes(comparedSearchString) ||
+        email.toLowerCase().includes(comparedSearchString) ||
+        phone.toLowerCase().includes(comparedSearchString)
+      ) {
+        return true;
+      }
+
+      return false;
+    });
+
+    setFilteredUsers(tempFilteredUsers);
+  }, [gender, nationality, search, users]);
 
   useEffect(() => {
     const indexOfLastPost = currentPage * usersPerPage;
     const indexOfFirstPost = indexOfLastPost - usersPerPage;
 
-    if (filteredUsers.length > 0) {
-      setCurrentUsers(filteredUsers.slice(indexOfFirstPost, indexOfLastPost));
-    } else {
-      setCurrentUsers(users.slice(indexOfFirstPost, indexOfLastPost));
-    }
+    setVisibleUsers(filteredUsers.slice(indexOfFirstPost, indexOfLastPost));
   }, [currentPage, filteredUsers, users, usersPerPage]);
 
   const sortHandler = (columnName: ColumnNameType) => {
@@ -84,19 +123,21 @@ const UserTable = (): JSX.Element => {
         <>
           <SortingTable
             sortingColumn={sortingColumn}
-            data={currentUsers}
+            data={visibleUsers}
             isSortAsc={isSortAsc}
             onSortHandler={sortHandler}
             onRowClick={rowClickHandler}
           />
 
           <div className={classes.navBlock}>
-            <Select onClickItem={selectHandler} items={numbersUsersPerPage} />
+            <Select
+              onClickItem={selectHandler}
+              items={numbersUsersPerPage}
+              value={`${usersPerPage}/ page`}
+            />
 
             <Pagination
-              totalPages={Math.ceil(
-                (filteredUsers.length || users.length) / usersPerPage
-              )}
+              totalPages={Math.ceil(filteredUsers.length / usersPerPage)}
               onChange={paginationHandler}
               currentPage={currentPage}
             />

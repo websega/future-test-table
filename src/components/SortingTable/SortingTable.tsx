@@ -1,7 +1,7 @@
 import React from 'react';
+import { UserType } from '../../redux/actions/users/types';
 
-import { UserType } from '../../redux/actions/types';
-import { ColumnNameType } from '../../redux/reducer';
+import { ColumnNameType } from '../../redux/reducers/users';
 import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter';
 
 import classes from './SortingTable.modules.scss';
@@ -12,6 +12,8 @@ const columnNames: ColumnNameType[] = [
   'lastName',
   'email',
   'phone',
+  'gender',
+  'nationality',
 ];
 
 type SortingTablePropsType = {
@@ -53,7 +55,7 @@ const SortingTable = ({
       <tbody>
         {data &&
           data.map((user) => {
-            const { id, name, email, phone } = user;
+            const { id, name, email, phone, gender, nat } = user;
 
             return (
               <tr
@@ -66,6 +68,8 @@ const SortingTable = ({
                 <td className={classes.tableCell}>{name.last}</td>
                 <td className={classes.tableCell}>{email}</td>
                 <td className={classes.tableCell}>{phone}</td>
+                <td className={classes.tableCell}>{gender}</td>
+                <td className={classes.tableCell}>{nat}</td>
               </tr>
             );
           })}

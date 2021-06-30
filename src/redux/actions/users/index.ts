@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { FormikValuesType } from '../../components/AddRowForm/AddRowForm';
+import { FormikValuesType } from '../../../components/AddRowForm/AddRowForm';
 
-import { RootStateType, ColumnNameType, FeatureFilterType } from '../reducer';
+import { ColumnNameType } from '../../reducers/users';
+import { RootStateType } from '../../reducers';
 
 import {
   FETCH_USERS_FAILURE,
@@ -11,63 +12,48 @@ import {
   FETCH_USERS_REQUESTED,
   SORT_USERS,
   TOGGLE_DATA_COLLECTION,
-  FILTER_USERS,
   ADD_USER,
-  ActionTypes,
+  ActionUsersTypes,
   TOOGLE_VISIBLE_ADD_ROW,
   UserType,
-  FILTER_USERS_BY_FEATURE,
 } from './types';
 
 type ThunkType = ThunkAction<
   Promise<void>,
   RootStateType,
   unknown,
-  Action<ActionTypes['type']>
+  Action<ActionUsersTypes['type']>
 >;
 
-const usersRequested = (): ActionTypes => ({
+const usersRequested = (): ActionUsersTypes => ({
   type: FETCH_USERS_REQUESTED,
 });
 
-const usersLoaded = (users: UserType[]): ActionTypes => ({
+const usersLoaded = (users: UserType[]): ActionUsersTypes => ({
   type: FETCH_USERS_LOADED,
   payload: users,
 });
 
-const usersError = (error: string): ActionTypes => ({
+const usersError = (error: string): ActionUsersTypes => ({
   type: FETCH_USERS_FAILURE,
   payload: error,
 });
 
-export const sortUsers = (columnName: ColumnNameType): ActionTypes => ({
+export const sortUsers = (columnName: ColumnNameType): ActionUsersTypes => ({
   type: SORT_USERS,
   payload: columnName,
 });
 
-export const toggleDataCollection = (): ActionTypes => ({
+export const toggleDataCollection = (): ActionUsersTypes => ({
   type: TOGGLE_DATA_COLLECTION,
 });
 
-export const filterUsers = (searchStr: string): ActionTypes => ({
-  type: FILTER_USERS,
-  payload: searchStr,
-});
-
-export const filterUsersByFeature = (
-  feature: FeatureFilterType,
-  value: string
-): ActionTypes => ({
-  type: FILTER_USERS_BY_FEATURE,
-  payload: { feature, value },
-});
-
-export const addUser = (user: FormikValuesType): ActionTypes => ({
+export const addUser = (user: FormikValuesType): ActionUsersTypes => ({
   type: ADD_USER,
   payload: user,
 });
 
-export const toggleAddRow = (): ActionTypes => ({
+export const toggleAddRow = (): ActionUsersTypes => ({
   type: TOOGLE_VISIBLE_ADD_ROW,
 });
 

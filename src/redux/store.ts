@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
-import { reducer } from './reducer';
+import { rootReducer } from './reducers';
 
 declare global {
   interface Window {
@@ -15,11 +15,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const setupStore = () => {
   if (process.env.NODE_ENV !== 'production') {
     return createStore(
-      reducer,
+      rootReducer,
       composeEnhancers(applyMiddleware(logger, thunk))
     );
   }
-  return createStore(reducer, applyMiddleware(thunk));
+  return createStore(rootReducer, applyMiddleware(thunk));
 };
 
 const store = setupStore();

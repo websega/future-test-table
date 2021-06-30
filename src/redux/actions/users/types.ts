@@ -1,15 +1,14 @@
-import { FormikValuesType } from '../../components/AddRowForm/AddRowForm';
-import { ColumnNameType, FeatureFilterType } from '../reducer';
+import { FormikValuesType } from '../../../components/AddRowForm/AddRowForm';
+import { ColumnNameType } from '../../reducers/users';
 
 export const FETCH_USERS_REQUESTED = 'FETCH_USERS_REQUSTED';
 export const FETCH_USERS_LOADED = 'FETCH_USERS_LOADED';
 export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 export const SORT_USERS = 'SORT_USERS';
 export const TOGGLE_DATA_COLLECTION = 'TOGGLE_DATA_COLLECTION';
-export const FILTER_USERS = 'FILTER_USERS';
-export const FILTER_USERS_BY_FEATURE = 'FILTER_USERS_BY_FEATURE';
 export const ADD_USER = 'ADD_USER';
 export const TOOGLE_VISIBLE_ADD_ROW = 'TOOGLE_VISIBLE_ADD_ROW';
+
 export interface Name {
   title: string;
   first: string;
@@ -71,24 +70,15 @@ type ActionSortUsers = { type: typeof SORT_USERS; payload: ColumnNameType };
 
 type ActionToggleDataCollection = { type: typeof TOGGLE_DATA_COLLECTION };
 
-type ActionFilterUsers = { type: typeof FILTER_USERS; payload: string };
-
-type ActionFilterUsersByFeature = {
-  type: typeof FILTER_USERS_BY_FEATURE;
-  payload: { feature: FeatureFilterType; value: string };
-};
-
 type ActionAddUsers = { type: typeof ADD_USER; payload: FormikValuesType };
 
 type ActionToogleAddRow = { type: typeof TOOGLE_VISIBLE_ADD_ROW };
 
-export type ActionTypes =
+export type ActionUsersTypes =
   | ActionFetchUsersRequsted
   | ActionFetchUsersLoaded
   | ActionFetchUsersFailure
   | ActionSortUsers
   | ActionToggleDataCollection
-  | ActionFilterUsers
   | ActionAddUsers
-  | ActionToogleAddRow
-  | ActionFilterUsersByFeature;
+  | ActionToogleAddRow;

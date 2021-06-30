@@ -1,21 +1,18 @@
-import { FormikValuesType } from '../components/AddRowForm/AddRowForm';
+import { FormikValuesType } from '../../components/AddRowForm/AddRowForm';
 import {
-  ActionTypes,
+  ActionUsersTypes,
   ADD_USER,
   FETCH_USERS_FAILURE,
   FETCH_USERS_LOADED,
   FETCH_USERS_REQUESTED,
-  FILTER_USERS,
-  FILTER_USERS_BY_FEATURE,
   SORT_USERS,
   TOGGLE_DATA_COLLECTION,
   TOOGLE_VISIBLE_ADD_ROW,
   UserType,
-} from './actions/types';
+} from '../actions/users/types';
 
 const initialState = {
   users: [],
-  filteredUsers: [],
   loading: false,
   error: null,
   isSortAsc: true,
@@ -26,7 +23,6 @@ const initialState = {
 
 type InitialStateType = {
   users: UserType[];
-  filteredUsers: UserType[];
   loading: boolean;
   error: null | string;
   isSortAsc: boolean;
@@ -40,7 +36,9 @@ export type ColumnNameType =
   | 'firstName'
   | 'lastName'
   | 'email'
-  | 'phone';
+  | 'phone'
+  | 'gender'
+  | 'nationality';
 
 const compareValue = (
   a: Omit<ColumnNameType, 'id' | 'firstName' | 'lastName'> | string,
@@ -81,31 +79,13 @@ const getSortedUsers = (state: InitialStateType, key: ColumnNameType) => {
       return modifier * compareValue(nameA, nameB);
     }
 
-    return modifier * compareValue(a[key], b[key]);
-  });
-};
-
-const filterUsers = (state: InitialStateType, searchStr: string) => {
-  if (searchStr.trim() === '') {
-    return [];
-  }
-
-  const lowerCaseStr = searchStr.trim().toLowerCase();
-
-  return state.users.filter((user) => {
-    const { id, name, email, phone } = user;
-
-    if (
-      (id.value && id.value.includes(lowerCaseStr)) ||
-      name.first.toLowerCase().includes(lowerCaseStr) ||
-      name.last.toLowerCase().includes(lowerCaseStr) ||
-      email.toLowerCase().includes(lowerCaseStr) ||
-      phone.toLowerCase().includes(lowerCaseStr)
-    ) {
-      return true;
+    if (key === 'nationality') {
+      const nameA = a.nat;
+      const nameB = b.nat;
+      return modifier * compareValue(nameA, nameB);
     }
 
-    return false;
+    return modifier * compareValue(a[key], b[key]);
   });
 };
 
@@ -146,23 +126,13 @@ const addUser = (state: InitialStateType, user: FormikValuesType) => {
   return [...state.users, newUser];
 };
 
-export type FeatureFilterType = 'nat' | 'gender';
-
-const filterUsersByFeature = (
-  state: InitialStateType,
-  feature: FeatureFilterType,
-  value: string
-) => {
-  return state.users.filter((user) => user[feature] === value);
-};
-
 const getNationalitites = (users: UserType[]) => {
   return Array.from(new Set(users.map((user) => user.nat)));
 };
 
-export const reducer = (
+export const usersReducer = (
   state: InitialStateType = initialState,
-  action: ActionTypes
+  action: ActionUsersTypes
 ): InitialStateType => {
   switch (action.type) {
     case FETCH_USERS_REQUESTED:
@@ -170,14 +140,15 @@ export const reducer = (
         ...state,
         loading: true,
       };
+
     case FETCH_USERS_LOADED:
       return {
         ...state,
         users: action.payload,
-        filteredUsers: [],
         loading: false,
         nationalities: getNationalitites(action.payload),
       };
+
     case FETCH_USERS_FAILURE:
       return {
         ...state,
@@ -185,35 +156,26 @@ export const reducer = (
         loading: false,
         error: action.payload,
       };
+
     case SORT_USERS:
       return {
         ...state,
         users: getSortedUsers(state, action.payload),
         isSortAsc: !state.isSortAsc,
       };
+
     case TOGGLE_DATA_COLLECTION:
       return {
         ...state,
         isBigCollection: !state.isBigCollection,
       };
-    case FILTER_USERS:
-      return {
-        ...state,
-        filteredUsers: filterUsers(state, action.payload),
-      };
-    case FILTER_USERS_BY_FEATURE: {
-      const { feature, value } = action.payload;
 
-      return {
-        ...state,
-        filteredUsers: filterUsersByFeature(state, feature, value),
-      };
-    }
     case ADD_USER:
       return {
         ...state,
         users: addUser(state, action.payload),
       };
+
     case TOOGLE_VISIBLE_ADD_ROW:
       return {
         ...state,
@@ -224,5 +186,3 @@ export const reducer = (
       return state;
   }
 };
-
-export type RootStateType = ReturnType<typeof reducer>;

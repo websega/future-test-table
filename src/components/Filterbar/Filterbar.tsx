@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { toggleAddRow, toggleDataCollection } from '../../redux/actions/users';
+
+import { clearFilters, setFilters } from '../../redux/actions/filters';
+
+import { FilterFieldType } from '../../redux/reducers/filters';
 import {
-  filterUsers,
-  filterUsersByFeature,
-  toggleAddRow,
-  toggleDataCollection,
-} from '../../redux/actions';
-import { FeatureFilterType } from '../../redux/reducer';
-import { getNationalities, getVisibleAddRow } from '../../selectors/selectors';
+  getFilters,
+  getIsBigCollection,
+  getNationalities,
+  getVisibleAddRow,
+} from '../../selectors/selectors';
 
 import ClearIcon from '../../assets/images/icons/clear.svg';
 
@@ -27,72 +30,82 @@ const Filterbar = (): JSX.Element => {
 
   const visibleAddRow = useSelector(getVisibleAddRow);
   const nationalities = useSelector(getNationalities);
+  const isBigCollection = useSelector(getIsBigCollection);
+  const { gender, nationality, search } = useSelector(getFilters);
 
-  const [inputValue, setInputValue] = useState<string>('');
+  const changeSearchFilterHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = e.target;
 
-  const handleChangeFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    dispatch(filterUsers(e.target.value));
+    dispatch(setFilters('search', value.trim()));
   };
 
-  const submitHandler = (e: React.MouseEvent<HTMLFormElement>) => {
+  const submitSearchHandler = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(filterUsers(inputValue));
-    setInputValue('');
+
+    dispatch(setFilters('search', search));
   };
 
-  const clickHandler = () => {
-    setInputValue('');
-    dispatch(filterUsers(''));
+  const clickClearAllHandler = () => {
+    dispatch(clearFilters());
   };
 
   const toggleVisible = () => {
     dispatch(toggleAddRow());
   };
 
-  const selectDataHandler = () => {
+  const dataSelectHandler = () => {
     dispatch(toggleDataCollection());
   };
 
-  const selectHandler = (feature: FeatureFilterType, value: string) => {
-    console.log('### ~ value', value);
-
-    dispatch(filterUsersByFeature(feature, value));
+  const filtersSelectHandler = (field: FilterFieldType, value: string) => {
+    dispatch(setFilters(field, value));
   };
 
   return (
     <Panel className={classes.filters}>
       <div className={classes.right}>
-        <form onSubmit={submitHandler}>
+        <form onSubmit={submitSearchHandler}>
           <InputBox
             id="search"
             type="input"
             placeholder="Найти"
-            onChange={handleChangeFilter}
-            value={inputValue}
+            onChange={changeSearchFilterHandler}
+            value={search}
             size="l"
           />
         </form>
 
-        <Button onClick={clickHandler} size="l" icon={<ClearIcon />}>
-          Очистить
-        </Button>
-      </div>
-
-      <div className={classes.left}>
-        <Select items={namesDataSet} onClickItem={selectDataHandler} />
+        <Select
+          items={namesDataSet}
+          onClickItem={dataSelectHandler}
+          value={isBigCollection ? namesDataSet[1] : namesDataSet[0]}
+        />
 
         <Select
           items={genderDataSet}
-          onClickItem={(value) => selectHandler('gender', value)}
+          onClickItem={(value) => {
+            filtersSelectHandler('gender', value);
+          }}
           placeholder="Гендер"
+          value={gender}
         />
 
         <Select
           items={nationalities}
-          onClickItem={(value) => selectHandler('nat', value)}
+          onClickItem={(value) => {
+            filtersSelectHandler('nationality', value);
+          }}
           placeholder="Национальность"
+          value={nationality}
         />
+      </div>
+
+      <div className={classes.left}>
+        <Button onClick={clickClearAllHandler} size="l" icon={<ClearIcon />}>
+          Сбросить фильтры
+        </Button>
 
         <Button onClick={toggleVisible} size="l" isFilled>
           {!visibleAddRow ? 'Добавить' : 'Скрыть'}

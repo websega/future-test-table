@@ -12,20 +12,20 @@ type SelectPropsType = {
   onClickItem: (val: string) => void;
   items: Array<string>;
   placeholder?: string;
+  value: string;
 };
 
 const Select = ({
   onClickItem,
   items,
   placeholder,
+  value,
 }: SelectPropsType): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [activeSuggestion, setActiveSuggestion] = useState<number>(0);
-  const [value, setValue] = useState<string>(placeholder || items[0]);
 
   const handleClickItem = (val: string) => {
     onClickItem(val);
-    setValue(val);
     setIsOpen(false);
   };
 
@@ -48,7 +48,6 @@ const Select = ({
     if (e.code === 'Enter' && items) {
       const val = items[activeSuggestion];
       onClickItem(val);
-      setValue(val);
       setIsOpen(false);
     }
   };
@@ -67,7 +66,7 @@ const Select = ({
         iconPosition="right"
         iconSize="s"
       >
-        <div className={classes.value}>{value}</div>
+        <div className={classes.value}>{value || placeholder}</div>
       </Button>
 
       {isOpen && (
