@@ -9,6 +9,15 @@
   transition: background 0.2s linear;
 
   position: relative;
+
+  &[disabled] {
+    background: $disabled-bg-btn;
+
+    &:hover {
+      cursor: default;
+      background: $disabled-bg-btn;
+    }
+  }
 }
 
 .large {
