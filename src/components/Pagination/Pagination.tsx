@@ -10,6 +10,9 @@ type PaginationPropsType = {
   currentPage: number;
 };
 
+const hidingThreshold = 3;
+const lowerBoundForHiding = 4;
+
 const Pagination = ({
   totalPages,
   onChange,
@@ -43,10 +46,10 @@ const Pagination = ({
 
         {numbers.map((number) => {
           if (
-            // скрываем номер, который равен +3 от текущего и не последний
-            (number === currentPage + 3 && number !== numbers.length) ||
-            // скрыть номера, которые находятся на -3 от текущего и при этом текущий номер больше 4
-            (currentPage > 4 && number === currentPage - 3)
+            (number === currentPage + hidingThreshold &&
+              number !== numbers.length) ||
+            (number === currentPage - hidingThreshold &&
+              currentPage > lowerBoundForHiding)
           ) {
             return (
               <li key={`page-${number}`} className={classes.ellipsis}>
@@ -56,12 +59,10 @@ const Pagination = ({
           }
 
           if (
-            // убирем все номера, которые больше текущего на 3
-            (number > currentPage + 3 &&
+            (number > currentPage + hidingThreshold &&
               number !== 1 &&
               number !== numbers.length) ||
-            // убрать номера, которые меньше текущего на 3 и при этом не 1 и не последний
-            (number < currentPage - 3 &&
+            (number < currentPage - hidingThreshold &&
               number !== 1 &&
               number !== numbers.length)
           ) {
